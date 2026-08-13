@@ -43,4 +43,4 @@ Ao final do desenvolvimento, espera-se disponibilizar uma aplicação web modern
 ---
 
 **Projeto acadêmico — Desenvolvimento Web**
-**Belinzoni Dino Parque — Araranguá, Santa Catarina**
+**Belinzoni Dino Parque — Araranguá, Criciúma, Santa Catarina**
