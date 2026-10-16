@@ -69,8 +69,40 @@ function Home() {
           <h1>Galeria do Parque</h1>
 
           <div className="galeria_imagens">
-              <img/>
+            <img className="galeria_imagem"/>
+            <p className="galeria_legenda">Legenda da imagem</p>
           </div>
+          <div className="galeria_imagens">
+            <img className="galeria_imagem"/>
+            <p className="galeria_legenda">Legenda da imagem</p>
+          </div>
+          <div className="galeria_imagens">
+            <img className="galeria_imagem"/>
+            <p className="galeria_legenda">Legenda da imagem</p>
+          </div>
+          <button className="galeria_card_button">
+            veja mais
+          </button>
+
+        </section>
+
+        <section className="programacao_tela_principal" id="agenda">
+          <p>Programação</p>
+          <h1>Agenda de Eventos</h1>
+
+          <details className="evento_card">
+            <p className="data_evento">Data do evento</p>
+            <summary className="evento_title">Título do evento</summary>
+            <p className="lacal_evento">📍Local do evento</p>
+            <p className="hora_evento">🕗Hora do evento</p>
+          </details>
+          <details className="funcionamento">
+            <h2>FUNCIONAMENTO</h2>
+            <p className="funcionamento_content_seg_sex">Seg-Sex <span>[00h-00h]</span></p>
+            <p className="funcionamento_content_sab">Sábados <span>[00h-00h]</span></p>
+            <p className="funcionamento_content_dom_feri">Dom e Feriados <span>[00h-00h]</span></p>
+          </details>
+
         </section>
 
         <section className="duvidas_tela_principal" id="duvidas">

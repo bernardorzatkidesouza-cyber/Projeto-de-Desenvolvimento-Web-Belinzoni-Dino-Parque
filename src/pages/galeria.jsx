@@ -29,6 +29,7 @@ function Galeria() {
           <p>Confira as fotos do Dino Parque Belinzoni</p>
         </div>
         <img className="galeria_imagem"/>
+        <p className="galeria_legenda">Legenda </p>
       </div>
     </div>
   );
