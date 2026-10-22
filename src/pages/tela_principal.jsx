@@ -1,6 +1,8 @@
 
-import ".../assets/mobile.css";
+import "../assets/mobile.css";
 import "../assets/styles.css";
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Home() {
   return (
@@ -14,7 +16,7 @@ function Home() {
           </h1>
 
           <nav className="menu__links">
-            <a href="#noticias">Notícias</a>
+            <a link >Notícias</a>
             <a href="#galeria">Galeria</a>
             <a href="#agenda">Agenda</a>
             <a href="#duvidas">Dúvidas</a>

@@ -1,4 +1,4 @@
-import ".../assets/mobile.css";
+import "../assets/mobile.css";
 import "../assets/styles.css";
 
 function AdminGaleria() {
