@@ -1,24 +1,56 @@
+
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
 
 function Galeria() {
+  const [fotos, setFotos] = useState([]);
+
+  useEffect(() => {
+    function carregarFotos() {
+      try {
+        const fotosSalvas = JSON.parse(
+          localStorage.getItem("galeriaFotos") || "[]"
+        );
+
+        setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
+      } catch {
+        setFotos([]);
+      }
+    }
+
+    carregarFotos();
+
+    // Atualiza quando os dados mudam em outra página ou aba
+    window.addEventListener("storage", carregarFotos);
+
+    // Atualiza ao voltar para esta página
+    window.addEventListener("focus", carregarFotos);
+
+    return () => {
+      window.removeEventListener("storage", carregarFotos);
+      window.removeEventListener("focus", carregarFotos);
+    };
+  }, []);
+
   return (
     <div className="tela-principal">
       <header className="menu">
         <div className="menu__body">
-          <img /> {/*logo prefeitura*/}
+          <img alt="Logo da prefeitura" />
+
           <h1 className="menu__title">
             Prefeitura de Araranguá
             <span>Dino Parque Belinzoni</span>
           </h1>
 
           <nav className="menu__links">
-            <Link to={`/`}>Inicio</Link>
-            <Link to={`/noticias`}>Notícias</Link>
+            <Link to="/">Início</Link>
+            <Link to="/noticias">Notícias</Link>
           </nav>
         </div>
       </header>
-
 
       <div className="galeria">
         <div className="banner_galeria">
@@ -26,8 +58,28 @@ function Galeria() {
           <h1>Galeria do Parque</h1>
           <p>Confira as fotos do Dino Parque Belinzoni</p>
         </div>
-        <img className="galeria_imagem"/>
-        <p className="galeria_legenda">Legenda </p>
+
+        {fotos.length === 0 ? (
+          <p className="galeria_vazia">
+            Nenhuma foto cadastrada no momento.
+          </p>
+        ) : (
+          <div className="galeria_lista">
+            {fotos.map((foto) => (
+              <div className="galeria_imagens" key={foto.id}>
+                <img
+                  className="galeria_imagem"
+                  src={foto.imagem}
+                  alt={foto.legenda || "Foto do Dino Parque Belinzoni"}
+                />
+
+                {foto.legenda && (
+                  <p className="galeria_legenda">{foto.legenda}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

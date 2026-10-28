@@ -1,5 +1,6 @@
 import "../assets/mobile.css";
 import "../assets/styles.css";
+import { Link } from 'react-router-dom';
 function Noticias() {
   return (
     <div className="tela-principal">

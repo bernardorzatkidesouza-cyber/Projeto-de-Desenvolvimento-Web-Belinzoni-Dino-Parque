@@ -1,23 +1,51 @@
 
+
 import "../assets/mobile.css";
 import "../assets/styles.css";
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
+  const [fotos, setFotos] = useState([]);
+
+  useEffect(() => {
+    function carregarFotos() {
+      try {
+        const fotosSalvas = JSON.parse(
+          localStorage.getItem("galeriaFotos") || "[]"
+        );
+
+        setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
+      } catch {
+        setFotos([]);
+      }
+    }
+
+    carregarFotos();
+
+    window.addEventListener("storage", carregarFotos);
+    window.addEventListener("focus", carregarFotos);
+
+    return () => {
+      window.removeEventListener("storage", carregarFotos);
+      window.removeEventListener("focus", carregarFotos);
+    };
+  }, []);
+
   return (
     <div className="tela-principal">
       <header className="menu">
         <div className="menu__body">
-          <img /> {/*logo prefeitura*/}
+          <img alt="Logo da prefeitura" />
+
           <h1 className="menu__title">
             Prefeitura de Araranguá
             <span>Dino Parque Belinzoni</span>
           </h1>
 
           <nav className="menu__links">
-            <Link to={`/noticias`}>Noticias</Link>
-            <Link to={`/galeria`}>Galeria</Link>
+            <Link to="/noticias">Notícias</Link>
+            <Link to="/galeria">Galeria</Link>
             <a href="#agenda">Agenda</a>
             <a href="#duvidas">Dúvidas</a>
           </nav>
@@ -25,13 +53,11 @@ function Home() {
       </header>
 
       <div className="site">
-        
         <section className="principal_banner">
-          <img className="imagem_banner"/>{/*iamgem banner*/}
+          <img className="imagem_banner" alt="Dino Parque Belinzoni" />
           <h1>Araranguá · Santa Catarina</h1>
           <h2>Dino Parque Belinzoni</h2>
           <p>Entrada gratuita!</p>
-
         </section>
 
         <section className="noticia_tela_pricipal" id="noticias">
@@ -42,50 +68,47 @@ function Home() {
             no Dino Parque Belinzoni
           </h3>
 
-          
-            <div className="noticia_card">
-              <div className="noticia_body">
-                <span className="noticia_badge">
-                  Destaque
-                </span>
+          <div className="noticia_card">
+            <div className="noticia_body">
+              <span className="noticia_badge">Destaque</span>
 
-                <h3 className="noticia_title">
-                  Título da notícia
-                </h3>
+              <h3 className="noticia_title">Título da notícia</h3>
 
-                <p className="noticia_description">
-                  Confira as novidades e informações
-                  do Dino Parque Belinzoni.
-                </p>
-              </div>
-
-              <button className="noticia_card_button">
-                Leia mais
-              </button>
+              <p className="noticia_description">
+                Confira as novidades e informações
+                do Dino Parque Belinzoni.
+              </p>
             </div>
-          
+
+            <button className="noticia_card_button">
+              Leia mais
+            </button>
+          </div>
         </section>
 
         <section className="galeria_tela_principal" id="galeria">
           <p>Fotos</p>
           <h1>Galeria do Parque</h1>
 
-          <div className="galeria_imagens">
-            <img className="galeria_imagem"/>
-            <p className="galeria_legenda">Legenda da imagem</p>
-          </div>
-          <div className="galeria_imagens">
-            <img className="galeria_imagem"/>
-            <p className="galeria_legenda">Legenda da imagem</p>
-          </div>
-          <div className="galeria_imagens">
-            <img className="galeria_imagem"/>
-            <p className="galeria_legenda">Legenda da imagem</p>
-          </div>
-          <button className="galeria_card_button">
-            veja mais
-          </button>
+          <div className="galeria_lista">
+            {fotos.slice(0, 5).map((foto) => (
+              <div className="galeria_imagens" key={foto.id}>
+                <img
+                  className="galeria_imagem"
+                  src={foto.imagem}
+                  alt={foto.legenda || "Foto do Dino Parque Belinzoni"}
+                />
 
+                {foto.legenda && (
+                  <p className="galeria_legenda">{foto.legenda}</p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <Link className="galeria_card_button" to="/galeria">
+            Veja mais
+          </Link>
         </section>
 
         <section className="programacao_tela_principal" id="agenda">
@@ -98,13 +121,19 @@ function Home() {
             <p className="lacal_evento">📍Local do evento</p>
             <p className="hora_evento">🕗Hora do evento</p>
           </details>
+
           <details className="funcionamento">
             <h2>FUNCIONAMENTO</h2>
-            <p className="funcionamento_content_seg_sex">Seg-Sex <span>[00h-00h]</span></p>
-            <p className="funcionamento_content_sab">Sábados <span>[00h-00h]</span></p>
-            <p className="funcionamento_content_dom_feri">Dom e Feriados <span>[00h-00h]</span></p>
+            <p className="funcionamento_content_seg_sex">
+              Seg-Sex <span>[00h-00h]</span>
+            </p>
+            <p className="funcionamento_content_sab">
+              Sábados <span>[00h-00h]</span>
+            </p>
+            <p className="funcionamento_content_dom_feri">
+              Dom e Feriados <span>[00h-00h]</span>
+            </p>
           </details>
-
         </section>
 
         <section className="duvidas_tela_principal" id="duvidas">
@@ -112,7 +141,9 @@ function Home() {
           <h1>Perguntas Frequentes</h1>
 
           <details className="duvidas_card">
-            <summary className="duvidas_title">O parque é gratuito?</summary>
+            <summary className="duvidas_title">
+              O parque é gratuito?
+            </summary>
             <p className="duvidas_conteudo">
               Sim! Consulte as informações oficiais
               do parque para confirmar as condições
@@ -129,7 +160,9 @@ function Home() {
             <article className="localizacao_card">
               <h3>📍</h3>
               <h4>ENDEREÇO</h4>
-              <p className="localizacao_content">[Rua, número — Bairro, Araranguá/SC]</p>
+              <p className="localizacao_content">
+                [Rua, número — Bairro, Araranguá/SC]
+              </p>
             </article>
 
             <article className="telefone_card">
@@ -147,20 +180,19 @@ function Home() {
 
           <div className="mapa_card">
             <h3>Mapa do Parque</h3>
-            <p>
-              Adicione aqui o mapa incorporado
-              do Google Maps.
-            </p>
+            <p>Adicione aqui o mapa incorporado do Google Maps.</p>
           </div>
         </section>
 
         <footer className="rodape">
           <div className="rodape_localizacao">
-            <img/> {/*logo prefeitura*/}
+            <img alt="Logo da prefeitura" />
 
             <h3>Dino Parque Belinzoni</h3>
             <p>ARARANGUÁ - SC</p>
-            <p className="localizacao_content">📍 [Rua, número — Bairro, Araranguá/SC]</p>
+            <p className="localizacao_content">
+              📍 [Rua, número — Bairro, Araranguá/SC]
+            </p>
             <p className="telefone_content">📞 [Número de contato]</p>
             <p className="email_content">✉ [E-mail do parque]</p>
           </div>
@@ -170,20 +202,26 @@ function Home() {
 
             <nav>
               <ul>
-                <a href="/">Início</a>
-                <a href="#noticias">Notícias</a>
-                <a href="#galeria">Galeria</a>
-                <a href="#agenda">Agenda</a>
-                <a href="#duvidas">Dúvidas</a>
+                <li><Link to="/">Início</Link></li>
+                <li><a href="#noticias">Notícias</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#agenda">Agenda</a></li>
+                <li><a href="#duvidas">Dúvidas</a></li>
               </ul>
             </nav>
           </div>
 
           <div className="rodape_funcionamento">
             <h4>FUNCIONAMENTO</h4>
-            <p className="funcionamento_content_seg_sex">Seg-Sex <span>[00h-00h]</span></p>
-            <p className="funcionamento_content_sab">Sábados <span>[00h-00h]</span></p>
-            <p className="funcionamento_content_dom_feri">Dom e Feriados <span>[00h-00h]</span></p>
+            <p className="funcionamento_content_seg_sex">
+              Seg-Sex <span>[00h-00h]</span>
+            </p>
+            <p className="funcionamento_content_sab">
+              Sábados <span>[00h-00h]</span>
+            </p>
+            <p className="funcionamento_content_dom_feri">
+              Dom e Feriados <span>[00h-00h]</span>
+            </p>
           </div>
 
           <hr />
@@ -199,3 +237,4 @@ function Home() {
 }
 
 export default Home;
+

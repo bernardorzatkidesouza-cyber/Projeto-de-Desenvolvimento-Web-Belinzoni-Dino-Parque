@@ -1,17 +1,9 @@
-import { useState } from 'react'
-import './App.css'
 
-import Tela_principal from './pages/Tela_principal'
+import { Outlet } from 'react-router-dom';
+import './App.css';
+
 function App() {
-
-  return (
-    <>
-    <Tela_principal/> 
- 
-    
-    </>
-
-  )
+  return <Outlet />;
 }
 
-export default App
+export default App;
