@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App.jsx';
-
+import Tela_principal from './pages/tela_principal.jsx';
 import Galeria from './pages/galeria.jsx';
 import ErrorPage from './pages/pagina_de_erro.jsx';
 import Noticias from './pages/noticias.jsx';
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        index: true,
+        element: <Tela_principal />,
+      },
       {
         path: 'galeria',
         element: <Galeria />,
@@ -99,11 +103,13 @@ const router = createBrowserRouter([
 const elementoRoot = document.getElementById('root');
 
 if (elementoRoot) {
-  createRoot(elementoRoot).render(
+  createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <RouterProvider router={router} />
+      {/* 1 config react router */}
+      <RouterProvider router={router}/>
     </StrictMode>
   );
+
 } else {
   console.error('Elemento com id="root" não encontrado no index.html.');
 }
