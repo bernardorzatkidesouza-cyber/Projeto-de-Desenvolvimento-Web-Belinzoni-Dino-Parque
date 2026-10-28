@@ -12,10 +12,8 @@ function Noticias() {
           </h1>
 
           <nav className="menu__links">
-            <a href="#tela_principal">Inicio</a>
-            <a href="#galeria">Galeria</a>
-            <a href="#agenda">Agenda</a>
-            <a href="#duvidas">Dúvidas</a>
+            <Link to={`/`}>Inicio</Link>
+            <Link to={`/galeria`}>Galeria</Link>
           </nav>
         </div>
       </header>

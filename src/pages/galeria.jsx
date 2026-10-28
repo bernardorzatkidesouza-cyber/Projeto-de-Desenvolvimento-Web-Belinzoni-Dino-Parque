@@ -13,10 +13,8 @@ function Galeria() {
           </h1>
 
           <nav className="menu__links">
-            <a href="#tela_principal">Inicio</a>
-            <a href="#noticias">Notícias</a>
-            <a href="#agenda">Agenda</a>
-            <a href="#duvidas">Dúvidas</a>
+            <Link to={`/`}>Inicio</Link>
+            <Link to={`/noticias`}>Notícias</Link>
           </nav>
         </div>
       </header>

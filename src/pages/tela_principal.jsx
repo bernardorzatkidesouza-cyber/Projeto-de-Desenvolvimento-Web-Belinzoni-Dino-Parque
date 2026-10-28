@@ -16,8 +16,8 @@ function Home() {
           </h1>
 
           <nav className="menu__links">
-            <a link >Notícias</a>
-            <a href="#galeria">Galeria</a>
+            <Link to={`/noticias`}>Noticias</Link>
+            <Link to={`/galeria`}>Galeria</Link>
             <a href="#agenda">Agenda</a>
             <a href="#duvidas">Dúvidas</a>
           </nav>
