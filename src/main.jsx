@@ -1,15 +1,103 @@
 
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import './index.css'
-import './styles.css'
-import './mobile.css'
+import './index.css';
 
-import App from './App.jsx'
+import App from './App.jsx';
+import Tela_principal from './pages/tela_principal.jsx';
+import Galeria from './pages/galeria.jsx';
+import ErrorPage from './pages/pagina_de_erro.jsx';
+import Noticias from './pages/noticias.jsx';
+import Acesso_admin from './pages/acesso_admin.jsx';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+import Admin_galeria from './pages/admin_galeria.jsx';
+import Admin_noticia from './pages/admin_noticia.jsx';
+import Admin_agenda from './pages/admin_agenda.jsx';
+import Admin_banner from './pages/admin_banner.jsx';
+import Admin_informacoes from './pages/admin_informacoes.jsx';
+import Admin_duvidas from './pages/admin_duvidas.jsx';
+
+
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Tela_principal />,
+      },
+      {
+        path: 'galeria',
+        element: <Galeria />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'noticias',
+        element: <Noticias />,
+        errorElement: <ErrorPage />,
+      },
+    ],
+  },
+
+  {
+    path: "/admin",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Acesso_admin />, 
+      },
+      {
+        path: "admin_noticia",
+        element: <Admin_noticia />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "admin_duvidas",
+        element: <Admin_duvidas />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "admin_agenda",
+        element: <Admin_agenda />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "admin_galeria",
+        element: <Admin_galeria />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "admin_informacoes",
+        element: <Admin_informacoes />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "admin_banner",
+        element: <Admin_banner />,
+        errorElement: <ErrorPage />,
+      },
+    ],
+  }
+]);
+
+const elementoRoot = document.getElementById('root');
+
+if (elementoRoot) {
+  createRoot(document.getElementById('root')).render(
+    <StrictMode>
+      {/* 1 config react router */}
+      <RouterProvider router={router}/>
+    </StrictMode>
+  );
+
+} else {
+  console.error('Elemento com id="root" não encontrado no index.html.');
+}
+
