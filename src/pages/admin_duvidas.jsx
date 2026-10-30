@@ -8,12 +8,12 @@ function AdminDuvidas() {
         <h2>Dino Parque</h2>
         <p>ADMINISTRAÇÃO</p>
         <hr />
-        <p><a href="#">Notícias</a></p>
-        <p><a href="#">Dúvidas </a></p>
-        <p><a href="#">Agenda</a></p>
-        <p><a href="#">Galeria de Fotos</a></p>
-        <p><a href="#">Informações</a></p>
-        <p><a href="#">Banner e Cores</a></p>
+        <p><Link to="/admin/admin_noticia">Notícias</Link></p>
+        <p><Link to="/admin/admin_agenda">Agenda</Link></p>
+        <p><Link to="/admin/admin_galeria">Galeria de Fotos</Link></p>
+        <p><Link to="/admin/admin_informacoes">Informações</Link></p>
+        <p><Link to="/admin/admin_banner">Banner e Cores</Link></p>
+
         <hr />
         <p><a href="#">Sair para o Site</a></p>
       </div>

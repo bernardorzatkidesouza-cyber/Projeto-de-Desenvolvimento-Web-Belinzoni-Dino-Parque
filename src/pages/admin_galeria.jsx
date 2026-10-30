@@ -63,12 +63,11 @@ function AdminGaleria() {
         <p>ADMINISTRAÇÃO</p>
         <hr />
 
-        <p><Link to="/acesso_admin/admin_noticia">Notícias</Link></p>
-        <p><Link to="/acesso_admin/admin_duvidas">Dúvidas</Link></p>
-        <p><Link to="/acesso_admin/admin_agenda">Agenda</Link></p>
-        <p><Link to="/acesso_admin/admin_galeria">Galeria de Fotos</Link></p>
-        <p><Link to="/acesso_admin/admin_informacoes">Informações</Link></p>
-        <p><Link to="/acesso_admin/admin_banner">Banner e Cores</Link></p>
+        <p><Link to="/admin/admin_noticia">Notícias</Link></p>
+        <p><Link to="/admin/admin_duvidas">Dúvidas</Link></p>
+        <p><Link to="/admin/admin_galeria">Galeria de Fotos</Link></p>
+        <p><Link to="/admin/admin_informacoes">Informações</Link></p>
+        <p><Link to="/admin/admin_banner">Banner e Cores</Link></p>
 
         <hr />
         <p><Link to="/">Sair para o Site</Link></p>

@@ -46,52 +46,56 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/acesso_admin',
+    path: "/admin",
     element: <Acesso_admin />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: 'admin_noticia',
+        index: true,
+        element: <Acesso_admin />, 
+      },
+      {
+        path: "admin_noticia",
         element: <Admin_noticia />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'admin_duvidas',
+        path: "admin_duvidas",
         element: <Admin_duvidas />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'nova_duvida',
+        path: "nova_duvida",
         element: <Nova_duvida />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'admin_agenda',
+        path: "admin_agenda",
         element: <Admin_agenda />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'novo_evento',
+        path: "novo_evento",
         element: <Novo_evento />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'admin_galeria',
+        path: "admin_galeria",
         element: <Admin_galeria />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'admin_informacoes',
+        path: "admin_informacoes",
         element: <Admin_informacoes />,
         errorElement: <ErrorPage />,
       },
       {
-        path: 'admin_banner',
+        path: "admin_banner",
         element: <Admin_banner />,
         errorElement: <ErrorPage />,
       },
     ],
-  },
+  }
 ]);
 
 const elementoRoot = document.getElementById('root');
