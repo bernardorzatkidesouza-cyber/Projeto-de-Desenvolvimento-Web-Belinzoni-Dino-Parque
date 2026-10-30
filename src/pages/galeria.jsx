@@ -15,17 +15,15 @@ function Galeria() {
         );
 
         setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
-      } catch {
+      } catch (erro) {
+        console.error("Erro ao carregar as fotos:", erro);
         setFotos([]);
       }
     }
 
     carregarFotos();
 
-    // Atualiza quando os dados mudam em outra página ou aba
     window.addEventListener("storage", carregarFotos);
-
-    // Atualiza ao voltar para esta página
     window.addEventListener("focus", carregarFotos);
 
     return () => {
@@ -65,8 +63,11 @@ function Galeria() {
           </p>
         ) : (
           <div className="galeria_lista">
-            {fotos.map((foto) => (
-              <div className="galeria_imagens" key={foto.id}>
+            {fotos.map((foto, index) => (
+              <div
+                className="galeria_imagens"
+                key={foto.id ?? index}
+              >
                 <img
                   className="galeria_imagem"
                   src={foto.imagem}

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
@@ -7,58 +7,65 @@ import "../assets/styles.css";
 function AdminGaleria() {
   const [urlImagem, setUrlImagem] = useState("");
   const [legenda, setLegenda] = useState("");
+  const [fotos, setFotos] = useState([]);
   const [mensagem, setMensagem] = useState("");
 
-  const [fotos, setFotos] = useState(() => {
+  // Carrega as fotos salvas
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem("galeriaFotos")) || [];
-    } catch {
-      return [];
-    }
-  });
+      const fotosSalvas = JSON.parse(
+        localStorage.getItem("galeriaFotos") || "[]"
+      );
 
-  function cadastrarFoto(event) {
-    event.preventDefault();
+      setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
+    } catch (erro) {
+      console.error("Erro ao carregar fotos:", erro);
+      setFotos([]);
+    }
+  }, []);
+
+  // Salva as fotos no localStorage
+  function salvarFotos(novasFotos) {
+    localStorage.setItem("galeriaFotos", JSON.stringify(novasFotos));
+    setFotos(novasFotos);
+  }
+
+  // Cadastra uma nova foto
+  function adicionarFoto(e) {
+    e.preventDefault();
 
     if (!urlImagem.trim()) {
-      setMensagem("Insira a URL da imagem.");
+      setMensagem("Informe a URL da imagem.");
       return;
     }
 
     const novaFoto = {
-      id: crypto.randomUUID(),
+      id: Date.now(),
       imagem: urlImagem.trim(),
       legenda: legenda.trim(),
     };
 
-    const fotosAtualizadas = [...fotos, novaFoto];
+    const novasFotos = [...fotos, novaFoto];
 
-    localStorage.setItem(
-      "galeriaFotos",
-      JSON.stringify(fotosAtualizadas)
-    );
+    salvarFotos(novasFotos);
 
-    setFotos(fotosAtualizadas);
     setUrlImagem("");
     setLegenda("");
     setMensagem("Foto cadastrada com sucesso!");
   }
 
+  // Exclui uma foto
   function excluirFoto(id) {
-    const fotosAtualizadas = fotos.filter((foto) => foto.id !== id);
+    const novasFotos = fotos.filter((foto) => foto.id !== id);
 
-    localStorage.setItem(
-      "galeriaFotos",
-      JSON.stringify(fotosAtualizadas)
-    );
-
-    setFotos(fotosAtualizadas);
-    setMensagem("Foto excluída.");
+    salvarFotos(novasFotos);
+    setMensagem("Foto excluída com sucesso!");
   }
 
   return (
-    <div className="admin_agenda">
-      <div className="admin_barra_lateral">
+    <div className="admin_galeria">
+
+      <aside className="admin_barra_lateral">
         <h2>Dino Parque</h2>
         <p>ADMINISTRAÇÃO</p>
         <hr />
@@ -71,87 +78,95 @@ function AdminGaleria() {
 
         <hr />
         <p><Link to="/">Sair para o Site</Link></p>
-      </div>
+      </aside>
 
-      <div className="admin_conteudo">
+      <main className="admin_conteudo">
         <h1>Galeria de Fotos</h1>
+        <p>Cadastre e gerencie as fotos do Dino Parque Belinzoni.</p>
 
-        <form onSubmit={cadastrarFoto}>
-          <div className="admin_galeria_card">
+        <section className="admin_formulario">
+          <h2>Adicionar nova foto</h2>
+
+          <form onSubmit={adicionarFoto}>
             <label htmlFor="urlImagem">URL da imagem</label>
-            <div className="admin_galeria_url">
-              <input
-                id="urlImagem"
-                type="url"
-                placeholder="Insira a URL da imagem"
-                value={urlImagem}
-                onChange={(event) => {
-                  setUrlImagem(event.target.value);
-                  setMensagem("");
-                }}
-                required
-              />
-            </div>
 
-            <label htmlFor="legenda">Legenda (opcional)</label>
-            <div className="admin_galeria_legenda">
-              <input
-                id="legenda"
-                type="text"
-                placeholder="Insira a legenda da imagem"
-                value={legenda}
-                onChange={(event) => setLegenda(event.target.value)}
-              />
-            </div>
+            <input
+              id="urlImagem"
+              type="url"
+              placeholder="Cole aqui o link da imagem"
+              value={urlImagem}
+              onChange={(e) => setUrlImagem(e.target.value)}
+              required
+            />
 
-            <div className="admin_galeria_previsualizacao">
-              {urlImagem.trim() ? (
+            {urlImagem.trim() && (
+              <div className="admin_preview">
+                <p>Pré-visualização:</p>
                 <img
                   src={urlImagem}
-                  alt={legenda || "Pré-visualização da imagem"}
-                  onError={(event) => {
-                    event.currentTarget.style.display = "none";
+                  alt="Pré-visualização da imagem"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
                   }}
-                  onLoad={(event) => {
-                    event.currentTarget.style.display = "block";
+                  onLoad={(e) => {
+                    e.currentTarget.style.display = "block";
                   }}
                 />
-              ) : (
-                <p>A pré-visualização aparecerá aqui.</p>
-              )}
+              </div>
+            )}
+
+            <label htmlFor="legenda">Legenda da foto</label>
+
+            <input
+              id="legenda"
+              type="text"
+              placeholder="Digite uma legenda (opcional)"
+              value={legenda}
+              onChange={(e) => setLegenda(e.target.value)}
+            />
+
+            <button type="submit">
+              Cadastrar foto
+            </button>
+          </form>
+
+          {mensagem && <p>{mensagem}</p>}
+        </section>
+
+        <section className="admin_lista_fotos">
+          <h2>Fotos cadastradas ({fotos.length})</h2>
+
+          {fotos.length === 0 ? (
+            <p>Nenhuma foto cadastrada.</p>
+          ) : (
+            <div className="galeria_lista">
+              {fotos.map((foto) => (
+                <div className="galeria_imagens" key={foto.id}>
+                  <img
+                    className="galeria_imagem"
+                    src={foto.imagem}
+                    alt={foto.legenda || "Foto do parque"}
+                  />
+
+                  {foto.legenda && (
+                    <p className="galeria_legenda">
+                      {foto.legenda}
+                    </p>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => excluirFoto(foto.id)}
+                  >
+                    Excluir foto
+                  </button>
+                </div>
+              ))}
             </div>
+          )}
+        </section>
+      </main>
 
-            <button type="submit">Cadastrar foto</button>
-
-            {mensagem && <p role="status">{mensagem}</p>}
-          </div>
-        </form>
-
-        <h2>Fotos cadastradas ({fotos.length})</h2>
-
-        <div className="galeria_lista">
-          {fotos.map((foto) => (
-            <div className="galeria_imagens" key={foto.id}>
-              <img
-                className="galeria_imagem"
-                src={foto.imagem}
-                alt={foto.legenda || "Foto do parque"}
-              />
-
-              <p className="galeria_legenda">
-                {foto.legenda || "Sem legenda"}
-              </p>
-
-              <button
-                type="button"
-                onClick={() => excluirFoto(foto.id)}
-              >
-                Excluir foto
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

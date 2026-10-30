@@ -4,10 +4,11 @@ import "../assets/styles.css";
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import useNoticias from "../hooks/useNoticias";
+import DuvidasFrequentes from "../components/DuvidasFrequentes";
 
 function Home() {
-
   const [fotos, setFotos] = useState([]);
 
   // RECEBER NOTÍCIAS ATRAVÉS DO CUSTOM HOOK
@@ -32,7 +33,8 @@ function Home() {
         );
 
         setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
-      } catch {
+      } catch (erro) {
+        console.error("Erro ao carregar fotos:", erro);
         setFotos([]);
       }
     }
@@ -51,14 +53,15 @@ function Home() {
   return (
     <div className="tela-principal">
 
+      {/* MENU */}
       <header className="menu">
         <div className="menu__body">
 
           <img alt="Logo da prefeitura" />
 
           <h1 className="menu__title">
-            Prefeitura de Araranguá
-            <span>Dino Parque Belinzoni</span>
+             Prefeitura de Araranguá
+            <span> Dino Parque Belinzoni</span>
           </h1>
 
           <nav className="menu__links">
@@ -183,29 +186,39 @@ function Home() {
           <p>Fotos</p>
           <h1>Galeria do Parque</h1>
 
-          <div className="galeria_lista">
+          {fotos.length === 0 ? (
+            <p className="galeria_vazia">
+              Nenhuma foto cadastrada no momento.
+            </p>
+          ) : (
 
-            {fotos.slice(0, 5).map((foto) => (
+            <div className="galeria_lista">
 
-              <div className="galeria_imagens" key={foto.id}>
+              {fotos.slice(0, 5).map((foto, index) => (
 
-                <img
-                  className="galeria_imagem"
-                  src={foto.imagem}
-                  alt={foto.legenda || "Foto do Dino Parque Belinzoni"}
-                />
+                <div
+                  className="galeria_imagens"
+                  key={foto.id ?? index}
+                >
 
-                {foto.legenda && (
-                  <p className="galeria_legenda">
-                    {foto.legenda}
-                  </p>
-                )}
+                  <img
+                    className="galeria_imagem"
+                    src={foto.imagem}
+                    alt={foto.legenda || "Foto do Dino Parque Belinzoni"}
+                  />
 
-              </div>
+                  {foto.legenda && (
+                    <p className="galeria_legenda">
+                      {foto.legenda}
+                    </p>
+                  )}
 
-            ))}
+                </div>
 
-          </div>
+              ))}
+
+            </div>
+          )}
 
           <Link className="galeria_card_button" to="/galeria">
             Veja mais
@@ -221,7 +234,9 @@ function Home() {
 
           <details className="evento_card">
             <p className="data_evento">Data do evento</p>
-            <summary className="evento_title">Título do evento</summary>
+            <summary className="evento_title">
+              Título do evento
+            </summary>
             <p className="lacal_evento">📍Local do evento</p>
             <p className="hora_evento">🕗Hora do evento</p>
           </details>
@@ -246,25 +261,8 @@ function Home() {
 
         </section>
 
-        {/* DÚVIDAS */}
-        <section className="duvidas_tela_principal" id="duvidas">
-
-          <p>DÚVIDAS</p>
-          <h1>Perguntas Frequentes</h1>
-
-          <details className="duvidas_card">
-
-            <summary className="duvidas_title">
-              O parque é gratuito?
-            </summary>
-
-            <p className="duvidas_conteudo">
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            </p>
-
-          </details>
-
-        </section>
+        {/* DÚVIDAS FREQUENTES */}
+        <DuvidasFrequentes />
 
         {/* LOCALIZAÇÃO */}
         <section className="localizacao_tela_principal" id="localizacao">

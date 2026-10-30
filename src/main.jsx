@@ -15,12 +15,11 @@ import Acesso_admin from './pages/acesso_admin.jsx';
 import Admin_galeria from './pages/admin_galeria.jsx';
 import Admin_noticia from './pages/admin_noticia.jsx';
 import Admin_agenda from './pages/admin_agenda.jsx';
-import Admin_banner from './pages/admin_banner_cores.jsx';
+import Admin_banner from './pages/admin_banner.jsx';
 import Admin_informacoes from './pages/admin_informacoes.jsx';
 import Admin_duvidas from './pages/admin_duvidas.jsx';
 
-import Nova_duvida from './pages/nova_duvida.jsx';
-import Novo_evento from './pages/novo_evento.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -47,7 +46,7 @@ const router = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <Acesso_admin />,
+    element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -65,18 +64,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "nova_duvida",
-        element: <Nova_duvida />,
-        errorElement: <ErrorPage />,
-      },
-      {
         path: "admin_agenda",
         element: <Admin_agenda />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "novo_evento",
-        element: <Novo_evento />,
         errorElement: <ErrorPage />,
       },
       {
