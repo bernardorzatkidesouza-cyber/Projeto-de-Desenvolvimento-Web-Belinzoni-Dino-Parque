@@ -57,7 +57,12 @@ function Home() {
       <header className="menu">
         <div className="menu__body">
 
-          <img alt="Logo da prefeitura" />
+          <img 
+            alt="Logo da prefeitura" 
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Brasao_ararangua.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
+            width="80"
+            height="80"
+          />
 
           <h1 className="menu__title">
              Prefeitura de Araranguá
@@ -310,7 +315,12 @@ function Home() {
 
           <div className="rodape_localizacao">
 
-            <img alt="Logo da prefeitura" />
+            <img 
+            alt="Logo da prefeitura" 
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Brasao_ararangua.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
+            width="50"
+            height="50"
+          />
 
             <h3>Dino Parque Belinzoni</h3>
             <p>ARARANGUÁ - SC</p>
