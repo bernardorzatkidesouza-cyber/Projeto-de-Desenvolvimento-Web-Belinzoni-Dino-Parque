@@ -1,7 +1,7 @@
 
 import "../assets/mobile.css";
 import "../assets/styles.css";
-
+import { Link } from "react-router-dom";
 function AcessoAdmin() {
   return (
     <div className="acesso_admin_pag">
@@ -19,7 +19,7 @@ function AcessoAdmin() {
             <label htmlFor="senha"> Senha </label>
             <input name="senha" id="senha" type="password"/>
 
-            <button>Entrar</button>
+            <Link to="/acesso_admin/admin_noticia">entrar</Link>
       </div>
     </div>
   );

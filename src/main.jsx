@@ -19,7 +19,6 @@ import Admin_banner from './pages/admin_banner_cores.jsx';
 import Admin_informacoes from './pages/admin_informacoes.jsx';
 import Admin_duvidas from './pages/admin_duvidas.jsx';
 
-import Nova_noticia from './pages/nova_noticia.jsx';
 import Nova_duvida from './pages/nova_duvida.jsx';
 import Novo_evento from './pages/novo_evento.jsx';
 
@@ -54,11 +53,6 @@ const router = createBrowserRouter([
       {
         path: 'admin_noticia',
         element: <Admin_noticia />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: 'nova_noticia',
-        element: <Nova_noticia />,
         errorElement: <ErrorPage />,
       },
       {

@@ -1,49 +1,154 @@
+
 import "../assets/mobile.css";
 import "../assets/styles.css";
 
+import { useState } from "react";
+import FormularioNoticia from "../components/FormularioNoticia";
+import useNoticias from "../hooks/useNoticias";
+
 function AdminNoticia() {
+  const {
+    noticias,
+    carregando,
+    erro,
+    cadastrarNoticia,
+    atualizarNoticia,
+    removerNoticia
+  } = useNoticias();
+
+  const [modalAberto, setModalAberto] = useState(false);
+  const [noticiaSelecionada, setNoticiaSelecionada] = useState(null);
+
+  function novaNoticia() {
+    setNoticiaSelecionada(null);
+    setModalAberto(true);
+  }
+
+  function editarNoticia(noticia) {
+    setNoticiaSelecionada(noticia);
+    setModalAberto(true);
+  }
+
+  function fecharModal() {
+    setModalAberto(false);
+    setNoticiaSelecionada(null);
+  }
+
+  async function salvarNoticia(dados) {
+    try {
+      if (noticiaSelecionada) {
+        await atualizarNoticia(noticiaSelecionada.id, dados);
+      } else {
+        await cadastrarNoticia(dados);
+      }
+
+      fecharModal();
+
+    } catch (erro) {
+      console.error("Erro ao salvar:", erro);
+      alert("Não foi possível salvar a notícia.");
+    }
+  }
+
+  async function excluirNoticia(id) {
+    if (!window.confirm("Deseja remover esta notícia?")) {
+      return;
+    }
+
+    try {
+      await removerNoticia(id);
+    } catch (erro) {
+      console.error("Erro ao remover:", erro);
+      alert("Não foi possível remover a notícia.");
+    }
+  }
+
   return (
     <div className="admin_noticia">
+
       <div className="admin_barra_lateral">
         <h2>Dino Parque</h2>
         <p>ADMINISTRAÇÃO</p>
         <hr />
+
         <p><a href="#">Notícias</a></p>
-        <p><a href="#">Dúvidas </a></p>
+        <p><a href="#">Dúvidas</a></p>
         <p><a href="#">Agenda</a></p>
         <p><a href="#">Galeria de Fotos</a></p>
         <p><a href="#">Informações</a></p>
         <p><a href="#">Banner e Cores</a></p>
+
         <hr />
-        <p><a href="#">Sair para o Site</a></p>
+        <p><a href="/">Sair para o Site</a></p>
       </div>
 
       <div className="admin_conteudo">
         <h1>Notícias</h1>
 
-        <button className="admin_button" type="button">
+        <button
+          className="admin_button"
+          type="button"
+          onClick={novaNoticia}
+        >
           + Nova Notícia
         </button>
 
-        <div className="admin_noticia_card">
-          <span className="noticia_status">publicado</span>
+        {carregando && <p>Carregando notícias...</p>}
 
-          <date className="noticia_data">
-            13/08/2026
-          </date>
+        {erro && <p>Erro ao carregar notícias: {erro}</p>}
 
-          <h3 className="noticia_title">
-            Título da notícia
-          </h3>
+        {!carregando && !erro && noticias.length === 0 && (
+          <p>Nenhuma notícia cadastrada.</p>
+        )}
 
-          <p className="noticia_description">
-            Insira aqui o texto completo da notícia sobre o parque....
-          </p>
+        <div className="lista_noticias_admin">
+          {noticias.map((noticia) => (
+            <div
+              className="admin_noticia_card"
+              key={noticia.id}
+            >
+              <span className="noticia_status">
+                {noticia.status}
+              </span>
 
-          <button type="button">Editar</button>
-          <button type="button">Remover</button>
+              <time className="noticia_data">
+                {noticia.data}
+              </time>
+
+              <h3 className="noticia_title">
+                {noticia.titulo}
+              </h3>
+
+              <p className="noticia_description">
+                {noticia.descricao}
+              </p>
+
+              <button
+                type="button"
+                onClick={() => editarNoticia(noticia)}
+              >
+                Editar
+              </button>
+
+              <button
+                type="button"
+                onClick={() => excluirNoticia(noticia.id)}
+              >
+                Remover
+              </button>
+            </div>
+          ))}
         </div>
       </div>
+
+      {modalAberto && (
+        <FormularioNoticia
+          noticia={noticiaSelecionada}
+          onSalvar={salvarNoticia}
+          onFechar={fecharModal}
+        />
+      )}
+
     </div>
   );
 }

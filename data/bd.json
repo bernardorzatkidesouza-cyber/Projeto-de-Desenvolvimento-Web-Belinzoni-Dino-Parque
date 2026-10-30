@@ -1,0 +1,21 @@
+
+{
+  "noticias": [
+    {
+      "id": "1",
+      "titulo": "Novidades do Dino Parque",
+      "descricao": "O Dino Parque está preparando novidades para seus visitantes.",
+      "imagem": "",
+      "data": "2026-10-29",
+      "status": "publicado"
+    },
+    {
+      "id": "2",
+      "titulo": "Conheça o parque",
+      "descricao": "Venha conhecer o Dino Parque Belinzoni em Araranguá.",
+      "imagem": "",
+      "data": "2026-10-28",
+      "status": "rascunho"
+    }
+  ]
+}

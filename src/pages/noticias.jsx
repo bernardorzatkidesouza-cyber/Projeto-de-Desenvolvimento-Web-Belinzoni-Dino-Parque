@@ -1,49 +1,75 @@
+
 import "../assets/mobile.css";
 import "../assets/styles.css";
-import { Link } from 'react-router-dom';
+
+import { Link } from "react-router-dom";
+import useNoticias from "../hooks/useNoticias";
+
 function Noticias() {
+  const {
+    noticias,
+    carregando,
+    erro
+  } = useNoticias();
+
+  const noticiasPublicadas = noticias
+    .filter((noticia) => noticia.status === "publicado")
+    .sort((a, b) => new Date(b.data) - new Date(a.data));
+
   return (
-    <div className="tela-principal">
+    <>
       <header className="menu">
         <div className="menu__body">
-          <img /> {/*logo prefeitura*/}
+          <img alt="Logo da prefeitura" />
+
           <h1 className="menu__title">
             Prefeitura de Araranguá
             <span>Dino Parque Belinzoni</span>
           </h1>
 
           <nav className="menu__links">
-            <Link to={`/`}>Inicio</Link>
-            <Link to={`/galeria`}>Galeria</Link>
+            <Link to="/">Início</Link>
+            <Link to="/galeria">Galeria</Link>
           </nav>
         </div>
       </header>
 
-      
-        <div className="noticia">
-            <p>comunicação</p>
-            <h2>Notícias do Parque</h2>
-            <p>Fique por dentro de tudo que acontece no Dino Parque Belinzoni</p>
+      <div className="pagina_noticias">
 
-            <div className="corpo_noticia">
-                <img className="noticia_imagem"/>
-                <div className="texto_total_noticia">
-                    <date className="noticia_data" >
-                        12/08/2026
-                    </date>
+        <h1>Notícias do Dino Parque</h1>
 
-                    <h1 className="noticia_title">
-                        [Título da notícia — insira aqui]
-                    </h1>
+        {carregando && <p>Carregando notícias...</p>}
 
-                    <p className="noticia_description">
-                        Insira aqui o texto completo da notícia sobre o parque.
-                    </p>
-                </div>
-            </div>
+        {erro && <p>Erro ao carregar notícias: {erro}</p>}
+
+        {!carregando && !erro && noticiasPublicadas.length === 0 && (
+          <p>Nenhuma notícia publicada no momento.</p>
+        )}
+
+        <div className="noticia_lista_principal">
+          {noticiasPublicadas.map((noticia) => (
+            <article
+              className="noticia_card"
+              key={noticia.id}
+            >
+              {noticia.imagem && (
+                <img
+                  src={noticia.imagem}
+                  alt={noticia.titulo}
+                  className="noticia_imagem"
+                />
+              )}
+
+              <time>{noticia.data}</time>
+
+              <h2>{noticia.titulo}</h2>
+
+              <p>{noticia.descricao}</p>
+            </article>
+          ))}
         </div>
-        
-    </div>
+      </div>
+    </>
   );
 }
 
