@@ -1,7 +1,7 @@
 
 import "../assets/mobile.css";
 import "../assets/styles.css";
-
+import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
 import { Link } from "react-router-dom";
 import useNoticias from "../hooks/useNoticias";
 
@@ -20,7 +20,11 @@ function Noticias() {
     <>
       <header className="menu">
         <div className="menu__body">
-          <img alt="Logo da prefeitura" />
+          <img 
+            src = {Brasao_ararangua}
+            width="80"
+            height="80"
+          />
 
           <h1 className="menu__title">
             Prefeitura de Araranguá

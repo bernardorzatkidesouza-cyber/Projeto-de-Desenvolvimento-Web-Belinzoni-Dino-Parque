@@ -2,11 +2,17 @@
 import "../assets/mobile.css";
 import "../assets/styles.css";
 import { Link } from "react-router-dom";
+import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
 
 function Admin_banner() {
   return (
     <div className="admin_banner">
       <div className="admin_barra_lateral">
+        <img 
+          src = {Brasao_ararangua}
+          width="80"
+          height="80"
+        />
         <h2>Dino Parque</h2>
         <p>ADMINISTRAÇÃO</p>
 

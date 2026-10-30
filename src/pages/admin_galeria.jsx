@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
+import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
 
 function AdminGaleria() {
   const [urlImagem, setUrlImagem] = useState("");
@@ -66,6 +67,11 @@ function AdminGaleria() {
     <div className="admin_galeria">
 
       <aside className="admin_barra_lateral">
+        <img 
+          src = {Brasao_ararangua}
+          width="80"
+          height="80"
+        />
         <h2>Dino Parque</h2>
         <p>ADMINISTRAÇÃO</p>
         <hr />

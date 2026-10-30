@@ -1,6 +1,7 @@
 
 import "../assets/mobile.css";
 import "../assets/styles.css";
+import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -58,8 +59,7 @@ function Home() {
         <div className="menu__body">
 
           <img 
-            alt="Logo da prefeitura" 
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Brasao_ararangua.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
+            src = {Brasao_ararangua}
             width="80"
             height="80"
           />
@@ -316,11 +316,10 @@ function Home() {
           <div className="rodape_localizacao">
 
             <img 
-            alt="Logo da prefeitura" 
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Brasao_ararangua.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original"
-            width="50"
-            height="50"
-          />
+              src = {Brasao_ararangua}
+              width="50"
+              height="50"
+            />
 
             <h3>Dino Parque Belinzoni</h3>
             <p>ARARANGUÁ - SC</p>
