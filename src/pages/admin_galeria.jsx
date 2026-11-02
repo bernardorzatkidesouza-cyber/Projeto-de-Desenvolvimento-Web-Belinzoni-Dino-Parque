@@ -1,5 +1,6 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useGaleria from "../hooks/useGaleria";
 import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
@@ -8,59 +9,36 @@ import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
 function AdminGaleria() {
   const [urlImagem, setUrlImagem] = useState("");
   const [legenda, setLegenda] = useState("");
-  const [fotos, setFotos] = useState([]);
   const [mensagem, setMensagem] = useState("");
+  const { fotos, carregando, erro, adicionarFoto, excluirFoto } = useGaleria();
 
-  // Carrega as fotos salvas
-  useEffect(() => {
-    try {
-      const fotosSalvas = JSON.parse(
-        localStorage.getItem("galeriaFotos") || "[]"
-      );
-
-      setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
-    } catch (erro) {
-      console.error("Erro ao carregar fotos:", erro);
-      setFotos([]);
-    }
-  }, []);
-
-  // Salva as fotos no localStorage
-  function salvarFotos(novasFotos) {
-    localStorage.setItem("galeriaFotos", JSON.stringify(novasFotos));
-    setFotos(novasFotos);
-  }
-
-  // Cadastra uma nova foto
-  function adicionarFoto(e) {
+  async function handleAdicionarFoto(e) {
     e.preventDefault();
-
+    setMensagem("");
     if (!urlImagem.trim()) {
       setMensagem("Informe a URL da imagem.");
       return;
     }
-
-    const novaFoto = {
-      id: Date.now(),
-      imagem: urlImagem.trim(),
-      legenda: legenda.trim(),
-    };
-
-    const novasFotos = [...fotos, novaFoto];
-
-    salvarFotos(novasFotos);
-
-    setUrlImagem("");
-    setLegenda("");
-    setMensagem("Foto cadastrada com sucesso!");
+    try {
+      await adicionarFoto({ imagem: urlImagem.trim(), legenda: legenda.trim() });
+      setUrlImagem("");
+      setLegenda("");
+      setMensagem("Foto cadastrada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao cadastrar foto:", error);
+      setMensagem(error.message || "Não foi possível cadastrar a foto.");
+    }
   }
 
-  // Exclui uma foto
-  function excluirFoto(id) {
-    const novasFotos = fotos.filter((foto) => foto.id !== id);
-
-    salvarFotos(novasFotos);
-    setMensagem("Foto excluída com sucesso!");
+  async function handleExcluirFoto(id) {
+    setMensagem("");
+    try {
+      await excluirFoto(id);
+      setMensagem("Foto excluída com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir foto:", error);
+      setMensagem(error.message || "Não foi possível excluir a foto.");
+    }
   }
 
   return (
@@ -93,7 +71,7 @@ function AdminGaleria() {
         <section className="admin_formulario">
           <h2>Adicionar nova foto</h2>
 
-          <form onSubmit={adicionarFoto}>
+          <form onSubmit={handleAdicionarFoto}>
             <label htmlFor="urlImagem">URL da imagem</label>
 
             <input
@@ -136,13 +114,16 @@ function AdminGaleria() {
             </button>
           </form>
 
-          {mensagem && <p>{mensagem}</p>}
+          {mensagem && <p role="status">{mensagem}</p>}
+          {erro && <p role="alert">{erro}</p>}
         </section>
 
         <section className="admin_lista_fotos">
           <h2>Fotos cadastradas ({fotos.length})</h2>
 
-          {fotos.length === 0 ? (
+          {carregando ? (
+            <p>Consultando a API e carregando fotos...</p>
+          ) : fotos.length === 0 ? (
             <p>Nenhuma foto cadastrada.</p>
           ) : (
             <div className="galeria_lista">
@@ -153,17 +134,8 @@ function AdminGaleria() {
                     src={foto.imagem}
                     alt={foto.legenda || "Foto do parque"}
                   />
-
-                  {foto.legenda && (
-                    <p className="galeria_legenda">
-                      {foto.legenda}
-                    </p>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => excluirFoto(foto.id)}
-                  >
+                  {foto.legenda && <p className="galeria_legenda">{foto.legenda}</p>}
+                  <button type="button" onClick={() => handleExcluirFoto(foto.id)}>
                     Excluir foto
                   </button>
                 </div>

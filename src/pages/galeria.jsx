@@ -1,43 +1,20 @@
 
-import { useState, useEffect } from "react";
+import useGaleria from "../hooks/useGaleria";
 import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
-import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
+import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+
 function Galeria() {
-  const [fotos, setFotos] = useState([]);
-
-  useEffect(() => {
-    function carregarFotos() {
-      try {
-        const fotosSalvas = JSON.parse(
-          localStorage.getItem("galeriaFotos") || "[]"
-        );
-
-        setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
-      } catch (erro) {
-        console.error("Erro ao carregar as fotos:", erro);
-        setFotos([]);
-      }
-    }
-
-    carregarFotos();
-
-    window.addEventListener("storage", carregarFotos);
-    window.addEventListener("focus", carregarFotos);
-
-    return () => {
-      window.removeEventListener("storage", carregarFotos);
-      window.removeEventListener("focus", carregarFotos);
-    };
-  }, []);
+  const { fotos, carregando, erro } = useGaleria();
 
   return (
     <div className="tela-principal">
       <header className="menu">
         <div className="menu__body">
-          <img 
-            src = {Brasao_ararangua}
+          <img
+            src={Brasao_ararangua}
+            alt="Brasão da Prefeitura de Araranguá"
             width="80"
             height="80"
           />
@@ -61,7 +38,15 @@ function Galeria() {
           <p>Confira as fotos do Dino Parque Belinzoni</p>
         </div>
 
-        {fotos.length === 0 ? (
+        {carregando ? (
+          <p className="galeria_vazia">
+            Carregando fotos da galeria...
+          </p>
+        ) : erro ? (
+          <p className="galeria_vazia" role="alert">
+            Não foi possível carregar as fotos: {erro}
+          </p>
+        ) : fotos.length === 0 ? (
           <p className="galeria_vazia">
             Nenhuma foto cadastrada no momento.
           </p>
@@ -75,11 +60,16 @@ function Galeria() {
                 <img
                   className="galeria_imagem"
                   src={foto.imagem}
-                  alt={foto.legenda || "Foto do Dino Parque Belinzoni"}
+                  alt={
+                    foto.legenda ||
+                    "Foto do Dino Parque Belinzoni"
+                  }
                 />
 
                 {foto.legenda && (
-                  <p className="galeria_legenda">{foto.legenda}</p>
+                  <p className="galeria_legenda">
+                    {foto.legenda}
+                  </p>
                 )}
               </div>
             ))}

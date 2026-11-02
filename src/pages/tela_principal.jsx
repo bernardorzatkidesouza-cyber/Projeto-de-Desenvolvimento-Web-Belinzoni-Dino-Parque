@@ -1,16 +1,16 @@
-
 import "../assets/mobile.css";
 import "../assets/styles.css";
-import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
+import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
 
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import useNoticias from "../hooks/useNoticias";
+import useGaleria from "../hooks/useGaleria";
+import useAgenda from "../hooks/useAgenda";
+
 import DuvidasFrequentes from "../components/DuvidasFrequentes";
 
 function Home() {
-  const [fotos, setFotos] = useState([]);
 
   // RECEBER NOTÍCIAS ATRAVÉS DO CUSTOM HOOK
   const {
@@ -19,37 +19,25 @@ function Home() {
     erro
   } = useNoticias();
 
+  // RECEBER FOTOS ATRAVÉS DA API
+  const {
+    fotos,
+    carregando: carregandoFotos,
+    erro: erroFotos
+  } = useGaleria();
+
+  // RECEBER EVENTOS ATRAVÉS DA API
+  const {
+    eventos,
+    carregando: carregandoEventos,
+    erro: erroEventos
+  } = useAgenda();
+
   // FILTRAR AS 3 NOTÍCIAS PUBLICADAS MAIS RECENTES
   const ultimasNoticias = noticias
     .filter((noticia) => noticia.status === "publicado")
     .sort((a, b) => new Date(b.data) - new Date(a.data))
     .slice(0, 3);
-
-  // CARREGAR FOTOS DA GALERIA
-  useEffect(() => {
-    function carregarFotos() {
-      try {
-        const fotosSalvas = JSON.parse(
-          localStorage.getItem("galeriaFotos") || "[]"
-        );
-
-        setFotos(Array.isArray(fotosSalvas) ? fotosSalvas : []);
-      } catch (erro) {
-        console.error("Erro ao carregar fotos:", erro);
-        setFotos([]);
-      }
-    }
-
-    carregarFotos();
-
-    window.addEventListener("storage", carregarFotos);
-    window.addEventListener("focus", carregarFotos);
-
-    return () => {
-      window.removeEventListener("storage", carregarFotos);
-      window.removeEventListener("focus", carregarFotos);
-    };
-  }, []);
 
   return (
     <div className="tela-principal">
@@ -58,15 +46,16 @@ function Home() {
       <header className="menu">
         <div className="menu__body">
 
-          <img 
-            src = {Brasao_ararangua}
+          <img
+            src={Brasao_ararangua}
+            alt="Brasão da Prefeitura de Araranguá"
             width="80"
             height="80"
           />
 
           <h1 className="menu__title">
-             Prefeitura de Araranguá
-            <span> Dino Parque Belinzoni</span>
+            Prefeitura de Araranguá
+            <span>Dino Parque Belinzoni</span>
           </h1>
 
           <nav className="menu__links">
@@ -191,7 +180,15 @@ function Home() {
           <p>Fotos</p>
           <h1>Galeria do Parque</h1>
 
-          {fotos.length === 0 ? (
+          {carregandoFotos ? (
+            <p className="galeria_vazia">
+              Carregando fotos da galeria...
+            </p>
+          ) : erroFotos ? (
+            <p className="galeria_vazia" role="alert">
+              Não foi possível carregar as fotos: {erroFotos}
+            </p>
+          ) : fotos.length === 0 ? (
             <p className="galeria_vazia">
               Nenhuma foto cadastrada no momento.
             </p>
@@ -209,7 +206,10 @@ function Home() {
                   <img
                     className="galeria_imagem"
                     src={foto.imagem}
-                    alt={foto.legenda || "Foto do Dino Parque Belinzoni"}
+                    alt={
+                      foto.legenda ||
+                      "Foto do Dino Parque Belinzoni"
+                    }
                   />
 
                   {foto.legenda && (
@@ -223,6 +223,7 @@ function Home() {
               ))}
 
             </div>
+
           )}
 
           <Link className="galeria_card_button" to="/galeria">
@@ -237,15 +238,58 @@ function Home() {
           <p>Programação</p>
           <h1>Agenda de Eventos</h1>
 
-          <details className="evento_card">
-            <p className="data_evento">Data do evento</p>
-            <summary className="evento_title">
-              Título do evento
-            </summary>
-            <p className="lacal_evento">📍Local do evento</p>
-            <p className="hora_evento">🕗Hora do evento</p>
-          </details>
+          {carregandoEventos ? (
 
+            <p>Carregando eventos...</p>
+
+          ) : erroEventos ? (
+
+            <p role="alert">
+              Não foi possível carregar os eventos.
+            </p>
+
+          ) : eventos.length === 0 ? (
+
+            <p>
+              Nenhum evento cadastrado no momento.
+            </p>
+
+          ) : (
+
+            <div className="agenda_lista_publica">
+
+              {eventos.map((evento, index) => (
+
+                <details
+                  className="evento_card"
+                  key={evento.id ?? evento.id_evento ?? index}
+                >
+
+                  <p className="data_evento">
+                    {evento.dia} {evento.mes}
+                  </p>
+
+                  <summary className="evento_title">
+                    {evento.titulo}
+                  </summary>
+
+                  <p className="lacal_evento">
+                    📍 {evento.local}
+                  </p>
+
+                  <p className="hora_evento">
+                    🕗 {evento.hora}
+                  </p>
+
+                </details>
+
+              ))}
+
+            </div>
+
+          )}
+
+          {/* FUNCIONAMENTO */}
           <details className="funcionamento">
 
             <h2>FUNCIONAMENTO</h2>
@@ -315,8 +359,9 @@ function Home() {
 
           <div className="rodape_localizacao">
 
-            <img 
-              src = {Brasao_ararangua}
+            <img
+              src={Brasao_ararangua}
+              alt="Brasão da Prefeitura de Araranguá"
               width="50"
               height="50"
             />
