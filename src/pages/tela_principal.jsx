@@ -1,5 +1,7 @@
+
 import "../assets/mobile.css";
 import "../assets/styles.css";
+
 import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
 
 import { Link } from "react-router-dom";
@@ -7,37 +9,74 @@ import { Link } from "react-router-dom";
 import useNoticias from "../hooks/useNoticias";
 import useGaleria from "../hooks/useGaleria";
 import useAgenda from "../hooks/useAgenda";
+import useInformacoes from "../hooks/useInformacoes";
 
 import DuvidasFrequentes from "../components/DuvidasFrequentes";
 
 function Home() {
 
-  // RECEBER NOTÍCIAS ATRAVÉS DO CUSTOM HOOK
+  // NOTÍCIAS
   const {
     noticias,
     carregando,
     erro
   } = useNoticias();
 
-  // RECEBER FOTOS ATRAVÉS DA API
+  // GALERIA
   const {
     fotos,
     carregando: carregandoFotos,
     erro: erroFotos
   } = useGaleria();
 
-  // RECEBER EVENTOS ATRAVÉS DA API
+  // AGENDA
   const {
     eventos,
     carregando: carregandoEventos,
     erro: erroEventos
   } = useAgenda();
 
-  // FILTRAR AS 3 NOTÍCIAS PUBLICADAS MAIS RECENTES
+  // INFORMAÇÕES DO PARQUE
+  const {
+    informacoes,
+    carregando: carregandoInformacoes,
+    erro: erroInformacoes
+  } = useInformacoes();
+
+  const horarios = informacoes.horarios;
+
+  // 3 NOTÍCIAS MAIS RECENTES
   const ultimasNoticias = noticias
     .filter((noticia) => noticia.status === "publicado")
     .sort((a, b) => new Date(b.data) - new Date(a.data))
     .slice(0, 3);
+
+  // COMPONENTE DE HORÁRIOS
+  function Funcionamento() {
+    if (carregandoInformacoes) {
+      return <p>Carregando horários...</p>;
+    }
+
+    if (erroInformacoes) {
+      return <p>Não foi possível carregar os horários.</p>;
+    }
+
+    return (
+      <>
+        <p className="funcionamento_content_seg_sex">
+          Seg-Sex <span>{horarios.segSex || "Não informado"}</span>
+        </p>
+
+        <p className="funcionamento_content_sab">
+          Sábados <span>{horarios.sabado || "Não informado"}</span>
+        </p>
+
+        <p className="funcionamento_content_dom_feri">
+          Dom e Feriados <span>{horarios.domFeriado || "Não informado"}</span>
+        </p>
+      </>
+    );
+  }
 
   return (
     <div className="tela-principal">
@@ -290,23 +329,13 @@ function Home() {
           )}
 
           {/* FUNCIONAMENTO */}
-          <details className="funcionamento">
+          <div className="funcionamento">
 
             <h2>FUNCIONAMENTO</h2>
 
-            <p className="funcionamento_content_seg_sex">
-              Seg-Sex <span>[00h-00h]</span>
-            </p>
+            <Funcionamento />
 
-            <p className="funcionamento_content_sab">
-              Sábados <span>[00h-00h]</span>
-            </p>
-
-            <p className="funcionamento_content_dom_feri">
-              Dom e Feriados <span>[00h-00h]</span>
-            </p>
-
-          </details>
+          </div>
 
         </section>
 
@@ -319,33 +348,50 @@ function Home() {
           <p>ONDE ESTAMOS</p>
           <h1>Encontre o Parque</h1>
 
-          <div>
+          {carregandoInformacoes ? (
 
-            <article className="localizacao_card">
-              <h3>📍</h3>
-              <h4>ENDEREÇO</h4>
-              <p className="localizacao_content">
-                [Rua, número — Bairro, Araranguá/SC]
-              </p>
-            </article>
+            <p>Carregando informações...</p>
 
-            <article className="telefone_card">
-              <h3>☎</h3>
-              <h4>TELEFONE</h4>
-              <p className="telefone_content">
-                [Número de contato]
-              </p>
-            </article>
+          ) : erroInformacoes ? (
 
-            <article className="email_card">
-              <h3>✉</h3>
-              <h4>E-MAIL</h4>
-              <p className="email_content">
-                [E-mail do parque]
-              </p>
-            </article>
+            <p role="alert">
+              Não foi possível carregar as informações do parque.
+            </p>
 
-          </div>
+          ) : (
+
+            <div>
+
+              <article className="localizacao_card">
+                <h3>📍</h3>
+                <h4>ENDEREÇO</h4>
+
+                <p className="localizacao_content">
+                  {informacoes.endereco || "Endereço não informado"}
+                </p>
+              </article>
+
+              <article className="telefone_card">
+                <h3>☎</h3>
+                <h4>TELEFONE</h4>
+
+                <p className="telefone_content">
+                  {informacoes.telefone || "Telefone não informado"}
+                </p>
+              </article>
+
+              <article className="email_card">
+                <h3>✉</h3>
+                <h4>E-MAIL</h4>
+
+                <p className="email_content">
+                  {informacoes.email || "E-mail não informado"}
+                </p>
+              </article>
+
+            </div>
+
+          )}
 
           <div className="mapa_card">
             <h3>Mapa do Parque</h3>
@@ -370,15 +416,15 @@ function Home() {
             <p>ARARANGUÁ - SC</p>
 
             <p className="localizacao_content">
-              📍 [Rua, número — Bairro, Araranguá/SC]
+              📍 {informacoes.endereco || "Endereço não informado"}
             </p>
 
             <p className="telefone_content">
-              📞 [Número de contato]
+              📞 {informacoes.telefone || "Telefone não informado"}
             </p>
 
             <p className="email_content">
-              ✉ [E-mail do parque]
+              ✉ {informacoes.email || "E-mail não informado"}
             </p>
 
           </div>
@@ -403,17 +449,7 @@ function Home() {
 
             <h4>FUNCIONAMENTO</h4>
 
-            <p className="funcionamento_content_seg_sex">
-              Seg-Sex <span>[00h-00h]</span>
-            </p>
-
-            <p className="funcionamento_content_sab">
-              Sábados <span>[00h-00h]</span>
-            </p>
-
-            <p className="funcionamento_content_dom_feri">
-              Dom e Feriados <span>[00h-00h]</span>
-            </p>
+            <Funcionamento />
 
           </div>
 
