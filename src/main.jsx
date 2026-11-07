@@ -1,29 +1,33 @@
 
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom";
 
-import './index.css';
+import "./index.css";
 
-import App from './App.jsx';
-import Tela_principal from './pages/tela_principal.jsx';
-import Galeria from './pages/galeria.jsx';
-import ErrorPage from './pages/pagina_de_erro.jsx';
-import Noticias from './pages/noticias.jsx';
-import Acesso_admin from './pages/acesso_admin.jsx';
+import App from "./App.jsx";
 
-import Admin_galeria from './pages/admin_galeria.jsx';
-import Admin_noticia from './pages/admin_noticia.jsx';
-import Admin_agenda from './pages/admin_agenda.jsx';
-import Admin_banner from './pages/admin_banner.jsx';
-import Admin_informacoes from './pages/admin_informacoes.jsx';
-import Admin_duvidas from './pages/admin_duvidas.jsx';
+import Tela_principal from "./pages/tela_principal.jsx";
+import Galeria from "./pages/galeria.jsx";
+import ErrorPage from "./pages/pagina_de_erro.jsx";
+import Noticias from "./pages/noticias.jsx";
+import Acesso_admin from "./pages/acesso_admin.jsx";
 
+import Admin_galeria from "./pages/admin_galeria.jsx";
+import Admin_noticia from "./pages/admin_noticia.jsx";
+import Admin_agenda from "./pages/admin_agenda.jsx";
+import Admin_banner from "./pages/admin_banner.jsx";
+import Admin_informacoes from "./pages/admin_informacoes.jsx";
+import Admin_duvidas from "./pages/admin_duvidas.jsx";
 
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
@@ -32,14 +36,12 @@ const router = createBrowserRouter([
         element: <Tela_principal />,
       },
       {
-        path: 'galeria',
+        path: "galeria",
         element: <Galeria />,
-        errorElement: <ErrorPage />,
       },
       {
-        path: 'noticias',
+        path: "noticias",
         element: <Noticias />,
-        errorElement: <ErrorPage />,
       },
     ],
   },
@@ -51,53 +53,50 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Acesso_admin />, 
+        element: <Acesso_admin />,
       },
+
       {
-        path: "admin_noticia",
-        element: <Admin_noticia />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "admin_duvidas",
-        element: <Admin_duvidas />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "admin_agenda",
-        element: <Admin_agenda />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "admin_galeria",
-        element: <Admin_galeria />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "admin_informacoes",
-        element: <Admin_informacoes />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "admin_banner",
-        element: <Admin_banner />,
-        errorElement: <ErrorPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "admin_noticia",
+            element: <Admin_noticia />,
+          },
+          {
+            path: "admin_duvidas",
+            element: <Admin_duvidas />,
+          },
+          {
+            path: "admin_agenda",
+            element: <Admin_agenda />,
+          },
+          {
+            path: "admin_galeria",
+            element: <Admin_galeria />,
+          },
+          {
+            path: "admin_informacoes",
+            element: <Admin_informacoes />,
+          },
+          {
+            path: "admin_banner",
+            element: <Admin_banner />,
+          },
+        ],
       },
     ],
-  }
+  },
 ]);
 
-const elementoRoot = document.getElementById('root');
+const elementoRoot = document.getElementById("root");
 
 if (elementoRoot) {
-  createRoot(document.getElementById('root')).render(
+  createRoot(elementoRoot).render(
     <StrictMode>
-      {/* 1 config react router */}
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </StrictMode>
   );
-
 } else {
   console.error('Elemento com id="root" não encontrado no index.html.');
 }
-

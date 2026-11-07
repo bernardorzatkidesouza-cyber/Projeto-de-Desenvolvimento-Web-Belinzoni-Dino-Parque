@@ -1,18 +1,38 @@
 
 import "../assets/mobile.css";
 import "../assets/styles.css";
+
 import { Link } from "react-router-dom";
-import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
+import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+
+import useTema from "../hooks/useTema";
 
 function Admin_banner() {
+  const { cores, alterarCor, restaurarCores } = useTema();
+
+  const opcoesCores = [
+    { nome: "verde", titulo: "Verde principal" },
+    { nome: "verdeEscuro", titulo: "Verde escuro" },
+    { nome: "verdeClaro", titulo: "Verde claro" },
+    { nome: "dourado", titulo: "Dourado / Destaque" },
+    { nome: "texto", titulo: "Cor do texto" },
+    { nome: "textoSuave", titulo: "Texto secundário" },
+    { nome: "fundo", titulo: "Fundo administrativo" },
+    { nome: "branco", titulo: "Branco" },
+    { nome: "borda", titulo: "Cor das bordas" },
+  ];
+
   return (
     <div className="admin_banner">
+
       <div className="admin_barra_lateral">
-        <img 
-          src = {Brasao_ararangua}
+        <img
+          src={Brasao_ararangua}
           width="80"
           height="80"
+          alt="Brasão de Araranguá"
         />
+
         <h2>Dino Parque</h2>
         <p>ADMINISTRAÇÃO</p>
 
@@ -30,62 +50,67 @@ function Admin_banner() {
       </div>
 
       <div className="admin_conteudo">
+
         <h1>Banner e Cores</h1>
+
         <p>
-          Personalize a apresentação principal e as cores usadas no site público.
+          Personalize a apresentação principal e as cores utilizadas no site.
         </p>
-        <div className="admin_banner_dados">
-          <h1>Dados do banner</h1>
 
-          <h2>Etiqueta</h2>
-          <p>Araranguá · Santa Catarina</p>
-
-          <h2>Título principal</h2>
-          <p>[Título do banner — insira aqui]</p>
-
-          <h2>Texto de apresentação</h2>
-          <p>Insira aqui o texto de apresentação do parque para os visitantes.</p>
-
-          <h2>URL da imagem</h2>
-          <p>https://exemplo.com/banner.jpg</p>
-          <p>Recomendado: 1440 × 500 px.</p>
-        </div>
         <div className="admin_banner_cores">
+
           <h1>Paleta de cores</h1>
-          <p>Use o seletor ou informe uma cor hexadecimal.</p>
 
-          <h2>Verde principal</h2>
-          <p> #1e5c1e</p>
-          
-          <h2>Verde secundário</h2>
-          <p> #2d7a2d</p>
+          <p>Selecione uma cor para personalizar o site.</p>
 
-          <h2>Fundo verde claro</h2>
-          <p> #e8f5e8</p>
+          {opcoesCores.map((opcao) => (
+            <div className="seletor_cor" key={opcao.nome}>
 
-          <h2>Cor de destaque</h2>
-          <p> #f0b820</p>
+              <label htmlFor={opcao.nome}>
+                {opcao.titulo}
+              </label>
 
-          <h2>Fundo escuro</h2>
-          <p> #1a1f14</p>
+              <input
+                id={opcao.nome}
+                type="color"
+                value={cores[opcao.nome]}
+                onChange={(e) =>
+                  alterarCor(opcao.nome, e.target.value)
+                }
+              />
 
-          <h2>Fundo da página</h2>
-          <p> #fafcf8</p>
+              <span>{cores[opcao.nome]}</span>
 
-          <button>Restaurar cores padrão</button>
+            </div>
+          ))}
+
+          <button onClick={restaurarCores}>
+            Restaurar cores padrão
+          </button>
+
         </div>
+
         <div className="admin_banner_preview">
-          <p>Araranguá · Santa Catarina</p>
-          <h1>[Título do banner — insira aqui]</h1>
-          <p>Insira aqui o texto de apresentação do parque para os visitantes.</p>
-          <p>Pré-visualização do banner</p>
-          <img src="https://exemplo.com/banner.jpg" alt="Imagem do banner" />
-        </div>
-      </div>
 
+          <h2>Pré-visualização do tema</h2>
+
+          <div className="preview_tema">
+            <h2>Bem-vindo ao Dino Parque</h2>
+
+            <p>
+              Conheça o Dino Parque Belinzoni em Araranguá.
+            </p>
+
+            <button>Botão de exemplo</button>
+
+            <span>Texto de destaque</span>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   );
 }
 
 export default Admin_banner;
-
