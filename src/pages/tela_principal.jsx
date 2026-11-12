@@ -393,10 +393,22 @@ function Home() {
 
           )}
 
+          <h1>Mapa do Parque</h1>
           <div className="mapa_card">
-            <h3>Mapa do Parque</h3>
-            <p>Adicione aqui o mapa incorporado do Google Maps.</p>
+            <div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d733.9606385378399!2d-49.484487667144215!3d-28.948087721947008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95222f6cc90fc01d%3A0xa64a8b279fb4be50!2sDino%20Parque%20Belinzoni%20-%20Parque%20dos%20Dinossauros!5e0!3m2!1spt-BR!2sbr!4v1794523483525!5m2!1spt-BR!2sbr"
+                  width="308%"
+                  height="450"
+                  style={{ border: 0, flexShrink: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  title="Mapa do Dino Parque Belinzoni"
+                />
+            </div>
           </div>
+
 
         </section>
 

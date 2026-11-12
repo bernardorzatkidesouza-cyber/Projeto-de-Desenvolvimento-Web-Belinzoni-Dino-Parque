@@ -51,7 +51,7 @@ function FormularioNoticia({ noticia, onSalvar, onFechar }) {
           onChange={(e) => setTitulo(e.target.value)}
           required
         />
-
+        <hr/>
         <label>CONTEÚDO</label>
 
         <textarea
@@ -60,7 +60,7 @@ function FormularioNoticia({ noticia, onSalvar, onFechar }) {
           onChange={(e) => setDescricao(e.target.value)}
           required
         />
-
+        <hr/>
         <label>URL DA IMAGEM</label>
 
         <input
