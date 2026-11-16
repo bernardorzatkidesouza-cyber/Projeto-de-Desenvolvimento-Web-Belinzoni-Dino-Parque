@@ -378,6 +378,117 @@ app.put("/api/informacoes", exigirAdmin, rota(async (req, res) => {
   res.json(r.rows[0].dados);
 }));
 
+// ============ CONFIGURAÇÕES DO SITE: BANNER E CORES ============
+
+// Consulta pública para todas as páginas
+app.get("/api/configuracoes-site", rota(async (req, res) => {
+  const resultado = await pool.query(
+    "SELECT dados FROM configuracoes_site WHERE id = 1"
+  );
+
+  res.json(resultado.rows[0]?.dados || {
+    titulo: "Araranguá · Santa Catarina",
+    subtitulo: "Dino Parque Belinzoni",
+    texto: "Entrada gratuita!",
+    imagem: "",
+    cores: {
+      verde: "#245c35",
+      verdeEscuro: "#173f27",
+      verdeClaro: "#eaf3e9",
+      dourado: "#d6a62c",
+      texto: "#263329",
+      textoSuave: "#68756b",
+      fundo: "#f6f8f5",
+      branco: "#ffffff",
+      borda: "#dce5dc"
+    }
+  });
+}));
+
+// Atualização protegida pelo login administrativo
+app.put("/api/configuracoes-site", exigirAdmin, rota(async (req, res) => {
+  const dados = req.body || {};
+
+  const titulo = String(dados.titulo || "").trim();
+  const subtitulo = String(dados.subtitulo || "").trim();
+  const texto = String(dados.texto || "").trim();
+  const imagem = String(dados.imagem || "").trim();
+
+  if (titulo.length > 200 ||
+      subtitulo.length > 255 ||
+      texto.length > 255) {
+    return res.status(400).json({
+      erro: "Um dos textos ultrapassou o limite permitido."
+    });
+  }
+
+  if (imagem && !/^\/api\/imagens\/\d+$/.test(imagem)) {
+    return res.status(400).json({
+      erro: "Endereço da imagem inválido."
+    });
+  }
+
+  const resultadoAtual = await pool.query(
+    "SELECT dados FROM configuracoes_site WHERE id = 1"
+  );
+
+  const atual = resultadoAtual.rows[0]?.dados || {};
+
+  const coresRecebidas = dados.cores || {};
+
+  const cores = {
+    ...(atual.cores || {}),
+    ...coresRecebidas
+  };
+
+  const coresPermitidas = [
+    "verde",
+    "verdeEscuro",
+    "verdeClaro",
+    "dourado",
+    "texto",
+    "textoSuave",
+    "fundo",
+    "branco",
+    "borda"
+  ];
+
+  for (const nome of coresPermitidas) {
+    if (
+      cores[nome] &&
+      !/^#[0-9a-fA-F]{6}$/.test(cores[nome])
+    ) {
+      return res.status(400).json({
+        erro: `Cor inválida: ${nome}`
+      });
+    }
+  }
+
+  const configuracoes = {
+    titulo: dados.titulo !== undefined ? titulo : atual.titulo || "Araranguá · Santa Catarina",
+    subtitulo: dados.subtitulo !== undefined ? subtitulo : atual.subtitulo || "Dino Parque Belinzoni",
+    texto: dados.texto !== undefined ? texto : atual.texto || "Entrada gratuita!",
+    imagem: dados.imagem !== undefined ? imagem : atual.imagem || "",
+    cores
+  };
+
+  const resultado = await pool.query(
+    `INSERT INTO configuracoes_site (id, dados)
+     VALUES (1, $1::jsonb)
+     ON CONFLICT (id)
+     DO UPDATE SET
+       dados = EXCLUDED.dados,
+       atualizado_em = CURRENT_TIMESTAMP
+     RETURNING dados`,
+    [JSON.stringify(configuracoes)]
+  );
+
+  res.json({
+    mensagem: "Configurações atualizadas com sucesso!",
+    ...resultado.rows[0].dados
+  });
+}));
+
 // ============ IMAGENS (arquivos guardados no banco) ============
 app.post("/api/upload", exigirAdmin, upload.single("imagem"), rota(async (req, res) => {
   if (!req.file) return res.status(400).json({ erro: "Envie uma imagem (jpg, png, webp ou gif até 5MB)" });

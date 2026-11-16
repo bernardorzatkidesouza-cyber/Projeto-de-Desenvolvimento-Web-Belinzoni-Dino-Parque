@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import "./index.css";
+import "./assets/styles.css";
 import App from "./App.jsx";
 
 import Tela_principal from "./pages/tela_principal.jsx";

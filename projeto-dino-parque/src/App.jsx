@@ -1,6 +1,6 @@
 
 import { Outlet } from "react-router-dom";
-
+import useTema from "./hooks/useTema";
 export {
   pegar,
   enviar,
@@ -9,9 +9,9 @@ export {
 } from "./services/api";
 
 function App() {
-  return (
-    <Outlet />
-  );
+  useTema();
+
+  return <Outlet />;
 }
 
 export default App;

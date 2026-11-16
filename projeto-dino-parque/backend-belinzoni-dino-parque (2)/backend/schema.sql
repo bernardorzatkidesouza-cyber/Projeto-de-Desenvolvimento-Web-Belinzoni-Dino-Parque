@@ -89,3 +89,9 @@ CREATE TABLE IF NOT EXISTS informacoes_parque (
     dados JSONB NOT NULL DEFAULT '{}'::jsonb,
     atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- Configurações globais do site: banner e cores
+CREATE TABLE IF NOT EXISTS configuracoes_site (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    dados JSONB NOT NULL DEFAULT '{}'::jsonb,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

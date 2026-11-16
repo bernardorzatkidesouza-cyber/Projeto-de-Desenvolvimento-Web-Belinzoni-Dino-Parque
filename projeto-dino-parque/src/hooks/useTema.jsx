@@ -1,7 +1,8 @@
 
 import { useState, useEffect } from "react";
+import { pegar, enviar } from "../services/api";
 
-const coresPadrao = {
+export const coresPadrao = {
   verde: "#245c35",
   verdeEscuro: "#173f27",
   verdeClaro: "#eaf3e9",
@@ -25,44 +26,111 @@ const variaveisCSS = {
   borda: "--borda",
 };
 
-function useTema() {
-  const [cores, setCores] = useState(() => {
-    try {
-      const salvas = localStorage.getItem("temaSite");
-
-      return salvas
-        ? { ...coresPadrao, ...JSON.parse(salvas) }
-        : coresPadrao;
-    } catch {
-      return coresPadrao;
-    }
+function aplicarCores(cores) {
+  Object.entries(variaveisCSS).forEach(([nome, variavel]) => {
+    document.documentElement.style.setProperty(
+      variavel,
+      cores[nome] || coresPadrao[nome]
+    );
   });
+}
+
+function useTema() {
+  const [cores, setCores] = useState(coresPadrao);
+  const [carregandoTema, setCarregandoTema] = useState(true);
 
   useEffect(() => {
-    const raiz = document.documentElement;
+    async function carregarTema() {
+      try {
+        const dados = await pegar("/configuracoes-site");
+        const novasCores = {
+          ...coresPadrao,
+          ...(dados.cores || {}),
+        };
 
-    Object.entries(variaveisCSS).forEach(([nome, variavel]) => {
-      raiz.style.setProperty(variavel, cores[nome]);
-    });
+        setCores(novasCores);
+        aplicarCores(novasCores);
+      } catch {
+        const salvas = localStorage.getItem("temaSite");
+        if (salvas) {
+          const novasCores = {
+            ...coresPadrao,
+            ...JSON.parse(salvas),
+          };
+          setCores(novasCores);
+          aplicarCores(novasCores);
+        } else {
+          aplicarCores(coresPadrao);
+        }
+      } finally {
+        setCarregandoTema(false);
+      }
+    }
 
-    localStorage.setItem("temaSite", JSON.stringify(cores));
-  }, [cores]);
+    carregarTema();
 
-  function alterarCor(nome, valor) {
-    setCores((anterior) => ({
-      ...anterior,
+    function receberTema(evento) {
+      setCores(evento.detail);
+      aplicarCores(evento.detail);
+    }
+
+    window.addEventListener("tema-atualizado", receberTema);
+
+    return () => {
+      window.removeEventListener("tema-atualizado", receberTema);
+    };
+  }, []);
+
+  async function alterarCor(nome, valor) {
+    const novasCores = {
+      ...cores,
       [nome]: valor,
-    }));
+    };
+
+    setCores(novasCores);
+    aplicarCores(novasCores);
+    localStorage.setItem("temaSite", JSON.stringify(novasCores));
+
+    window.dispatchEvent(
+      new CustomEvent("tema-atualizado", {
+        detail: novasCores,
+      })
+    );
+
+    try {
+      await enviar("/configuracoes-site", "PUT", {
+        cores: novasCores,
+      });
+    } catch (erro) {
+      console.error("Erro ao salvar cores:", erro);
+    }
   }
 
-  function restaurarCores() {
-    setCores({ ...coresPadrao });
+  async function restaurarCores() {
+    setCores(coresPadrao);
+    aplicarCores(coresPadrao);
+    localStorage.setItem("temaSite", JSON.stringify(coresPadrao));
+
+    window.dispatchEvent(
+      new CustomEvent("tema-atualizado", {
+        detail: coresPadrao,
+      })
+    );
+
+    try {
+      await enviar("/configuracoes-site", "PUT", {
+        cores: coresPadrao,
+      });
+    } catch (erro) {
+      console.error("Erro ao restaurar cores:", erro);
+    }
   }
 
   return {
     cores,
     alterarCor,
     restaurarCores,
+    carregandoTema,
   };
 }
 

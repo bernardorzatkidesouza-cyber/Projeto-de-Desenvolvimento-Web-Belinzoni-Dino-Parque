@@ -3,7 +3,8 @@ import "../assets/mobile.css";
 import "../assets/styles.css";
 
 import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
-
+import { useEffect, useState } from "react";
+import { pegar } from "../services/api";
 import { Link } from "react-router-dom";
 
 import useNoticias from "../hooks/useNoticias";
@@ -14,7 +15,31 @@ import useInformacoes from "../hooks/useInformacoes";
 import DuvidasFrequentes from "../components/DuvidasFrequentes";
 
 function Home() {
+  const [banner, setBanner] = useState({
+    titulo: "Araranguá · Santa Catarina",
+    subtitulo: "Dino Parque Belinzoni",
+    texto: "Entrada gratuita!",
+    imagem: "",
+  });
 
+  useEffect(() => {
+    async function carregarBanner() {
+      try {
+        const dados = await pegar("/configuracoes-site");
+
+        setBanner({
+          titulo: dados.titulo || "Araranguá · Santa Catarina",
+          subtitulo: dados.subtitulo || "Dino Parque Belinzoni",
+          texto: dados.texto || "Entrada gratuita!",
+          imagem: dados.imagem || "",
+        });
+      } catch (erro) {
+        console.error("Erro ao carregar banner:", erro);
+      }
+    }
+
+    carregarBanner();
+  }, []);
   // NOTÍCIAS
   const {
     noticias,
@@ -112,9 +137,19 @@ function Home() {
         {/* BANNER PRINCIPAL */}
         <section className="principal_banner">
 
-          <h1>Araranguá · Santa Catarina</h1>
-          <h2>Dino Parque Belinzoni</h2>
-          <p>Entrada gratuita!</p>
+          {banner.imagem && (
+            <img
+              className="imagem_banner"
+              src={banner.imagem}
+              alt="Imagem do Dino Parque Belinzoni"
+            />
+          )}
+
+          <h1>{banner.titulo}</h1>
+
+          <h2>{banner.subtitulo}</h2>
+
+          <p>{banner.texto}</p>
 
         </section>
 
