@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "../assets/mobile.css";
 import "../assets/styles.css";
-import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 
 import useDuvidas from "../hooks/useDuvidas";
 
@@ -30,7 +30,6 @@ function AdminDuvidas() {
     ordemExibicao: 1,
   });
 
-  // ABRIR MODAL PARA NOVA PERGUNTA
   function novaDuvida() {
     setEditando(null);
 
@@ -45,7 +44,6 @@ function AdminDuvidas() {
     setModalAberto(true);
   }
 
-  // ABRIR MODAL PARA EDITAR
   function editarDuvida(duvida) {
     setEditando(duvida);
 
@@ -60,7 +58,6 @@ function AdminDuvidas() {
     setModalAberto(true);
   }
 
-  // ALTERAR CAMPOS
   function alterarCampo(e) {
     const { name, value } = e.target;
 
@@ -72,7 +69,6 @@ function AdminDuvidas() {
     }));
   }
 
-  // SALVAR PERGUNTA
   async function salvarDuvida(e) {
     e.preventDefault();
 
@@ -105,7 +101,6 @@ function AdminDuvidas() {
     }
   }
 
-  // REMOVER PERGUNTA
   async function removerDuvida(duvida) {
     const confirmar = window.confirm(
       "Tem certeza que deseja remover esta dúvida?"
@@ -122,15 +117,12 @@ function AdminDuvidas() {
     }
   }
 
-  // ORDENAR PERGUNTAS
   const duvidasOrdenadas = [...duvidas].sort(
     (a, b) => a.ordemExibicao - b.ordemExibicao
   );
 
   return (
     <div className="admin_duvidas">
-
-      {/* MENU LATERAL */}
       <div className="admin_barra_lateral">
         <img 
           src = {Brasao_ararangua}
@@ -154,7 +146,6 @@ function AdminDuvidas() {
         <p><Link to="/">Sair para o Site</Link></p>
       </div>
 
-      {/* CONTEÚDO */}
       <div className="admin_conteudo">
 
         <div className="admin_duvidas_cabecalho">
@@ -241,8 +232,6 @@ function AdminDuvidas() {
         )}
 
       </div>
-
-      {/* MODAL DE CADASTRO / EDIÇÃO */}
       {modalAberto && (
 
         <div

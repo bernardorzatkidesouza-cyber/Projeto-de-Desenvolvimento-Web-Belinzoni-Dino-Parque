@@ -75,7 +75,6 @@ function ModalEvento({
 
         <form onSubmit={handleSubmit}>
 
-          {/* DIA E MÊS */}
           <div className="evento_campos_data">
 
             <div className="evento_campo">
@@ -108,7 +107,6 @@ function ModalEvento({
 
           </div>
 
-          {/* TÍTULO */}
           <div className="evento_campo">
             <label>TÍTULO DO EVENTO</label>
 
@@ -121,7 +119,6 @@ function ModalEvento({
             />
           </div>
 
-          {/* LOCAL */}
           <div className="evento_campo">
             <label>LOCAL</label>
 
@@ -134,7 +131,6 @@ function ModalEvento({
             />
           </div>
 
-          {/* HORÁRIO */}
           <div className="evento_campo">
             <label>HORÁRIO</label>
 
@@ -153,7 +149,6 @@ function ModalEvento({
             </p>
           )}
 
-          {/* BOTÕES */}
           <div className="evento_modal_botoes">
 
             <button

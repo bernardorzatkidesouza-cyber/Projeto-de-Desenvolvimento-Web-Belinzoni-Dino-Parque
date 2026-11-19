@@ -2,7 +2,7 @@
 import "../assets/mobile.css";
 import "../assets/styles.css";
 
-import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 import { useEffect, useState } from "react";
 import { pegar } from "../services/api";
 import { Link } from "react-router-dom";
@@ -106,7 +106,6 @@ function Home() {
   return (
     <div className="tela-principal">
 
-      {/* MENU */}
       <header className="menu">
         <div className="menu__body">
 
@@ -133,8 +132,6 @@ function Home() {
       </header>
 
       <div className="site">
-
-        {/* BANNER PRINCIPAL */}
         <section className="principal_banner">
 
           {banner.imagem && (
@@ -153,7 +150,6 @@ function Home() {
 
         </section>
 
-        {/* NOTÍCIAS */}
         <section className="noticia_tela_pricipal" id="noticias">
 
           <p>Novidades</p>
@@ -227,21 +223,11 @@ function Home() {
               {ultimasNoticias.length === 0 && (
                 <p>Nenhuma notícia publicada no momento.</p>
               )}
-
             </div>
-
           )}
-
-          <Link
-            className="galeria_card_button"
-            to="/noticias"
-          >
-            Ver todas as notícias
-          </Link>
-
+          <Link className="galeria_card_button"to="/noticias">Ver todas as notícias</Link>
         </section>
 
-        {/* GALERIA */}
         <section className="galeria_tela_principal" id="galeria">
 
           <p>Fotos</p>
@@ -284,22 +270,14 @@ function Home() {
                       {foto.legenda}
                     </p>
                   )}
-
                 </div>
-
               ))}
-
             </div>
-
           )}
 
-          <Link className="galeria_card_button" to="/galeria">
-            Veja mais
-          </Link>
-
+          <Link className="galeria_card_button" to="/galeria">Veja mais</Link>
         </section>
 
-        {/* AGENDA */}
         <section className="programacao_tela_principal" id="agenda">
 
           <p>Programação</p>
@@ -356,21 +334,16 @@ function Home() {
 
           )}
 
-          {/* FUNCIONAMENTO */}
           <div className="funcionamento">
 
             <h2>FUNCIONAMENTO</h2>
 
             <Funcionamento />
-
           </div>
-
         </section>
 
-        {/* DÚVIDAS FREQUENTES */}
         <DuvidasFrequentes />
 
-        {/* LOCALIZAÇÃO */}
         <section className="localizacao_tela_principal" id="localizacao">
 
           <p>ONDE ESTAMOS</p>
@@ -389,7 +362,6 @@ function Home() {
           ) : (
 
             <div>
-
               <article className="localizacao_card">
                 <h3>📍</h3>
                 <h4>ENDEREÇO</h4>
@@ -416,9 +388,7 @@ function Home() {
                   {informacoes.email || "E-mail não informado"}
                 </p>
               </article>
-
             </div>
-
           )}
 
           <h1>Mapa do Parque</h1>
@@ -436,15 +406,10 @@ function Home() {
                 />
             </div>
           </div>
-
-
         </section>
 
-        {/* RODAPÉ */}
         <footer className="rodape">
-
           <div className="rodape_localizacao">
-
             <img
               src={Brasao_ararangua}
               alt="Brasão da Prefeitura de Araranguá"
@@ -466,7 +431,6 @@ function Home() {
             <p className="email_content">
               ✉ {informacoes.email || "E-mail não informado"}
             </p>
-
           </div>
 
           <div className="rodape_navegacao">
@@ -486,11 +450,8 @@ function Home() {
           </div>
 
           <div className="rodape_funcionamento">
-
             <h4>FUNCIONAMENTO</h4>
-
             <Funcionamento />
-
           </div>
 
           <hr />

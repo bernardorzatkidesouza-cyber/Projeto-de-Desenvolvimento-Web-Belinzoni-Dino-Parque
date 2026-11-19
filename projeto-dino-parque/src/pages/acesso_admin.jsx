@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
 
-import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 import useLogin from "../hooks/useLogin";
 
 function AcessoAdmin() {

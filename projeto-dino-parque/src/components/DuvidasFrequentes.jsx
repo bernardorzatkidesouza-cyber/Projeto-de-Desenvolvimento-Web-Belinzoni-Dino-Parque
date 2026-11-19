@@ -66,15 +66,10 @@ function DuvidasFrequentes() {
                 </p>
 
               </details>
-
             ))
-
           )}
-
         </div>
-
       )}
-
     </section>
   );
 }

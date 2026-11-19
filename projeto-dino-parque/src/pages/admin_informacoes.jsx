@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
 
-import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 import { pegar, enviar } from "../services/api";
 
 const API_URL = "/api/informacoes";
@@ -15,21 +15,16 @@ function AdminInformacoes() {
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
-
-  // HORÁRIOS DE FUNCIONAMENTO
   const [horarios, setHorarios] = useState({
     segSex: "",
     sabado: "",
     domFeriado: "",
   });
-
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
-
   const [erro, setErro] = useState("");
   const [mensagem, setMensagem] = useState("");
 
-  // CONSULTAR INFORMAÇÕES NA API
   useEffect(() => {
 
     async function buscarInformacoes() {
@@ -66,17 +61,14 @@ function AdminInformacoes() {
 
   }, []);
 
-  // ATUALIZAR HORÁRIOS
   function atualizarHorario(campo, valor) {
 
     setHorarios((horariosAtuais) => ({
       ...horariosAtuais,
       [campo]: valor,
     }));
-
   }
 
-  // SALVAR INFORMAÇÕES NA API
   async function salvarInformacoes() {
 
     try {
@@ -107,10 +99,7 @@ function AdminInformacoes() {
   }
 
   return (
-
     <div className="admin_informacoes">
-
-      {/* MENU LATERAL */}
       <div className="admin_barra_lateral">
 
         <img
@@ -124,48 +113,16 @@ function AdminInformacoes() {
         <p>ADMINISTRAÇÃO</p>
 
         <hr />
-
-        <p>
-          <Link to="/admin/admin_noticia">
-            Notícias
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_duvidas">
-            Dúvidas
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_galeria">
-            Galeria de Fotos
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_banner">
-            Banner e Cores
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_agenda">
-            Agenda de Eventos
-          </Link>
-        </p>
-
+        <p><Link to="/admin/admin_noticia">Notícias</Link></p>
+        <p><Link to="/admin/admin_duvidas">Dúvidas</Link></p>
+        <p><Link to="/admin/admin_galeria">Galeria de Fotos</Link></p>
+        <p><Link to="/admin/admin_banner">Banner e Cores</Link></p>
+        <p><Link to="/admin/admin_agenda">Agenda de Eventos</Link></p>
         <hr />
 
-        <p>
-          <Link to="/">
-            Sair para o Site
-          </Link>
-        </p>
-
+        <p><Link to="/">Sair para o Site</Link></p>
       </div>
 
-      {/* CONTEÚDO */}
       <div className="admin_conteudo">
 
         <h1>Informações do Parque</h1>
@@ -182,38 +139,27 @@ function AdminInformacoes() {
         ) : (
 
           <div className="informacoes_formulario">
-
-            {/* ENDEREÇO */}
             <h3>Endereço</h3>
-
             <input
               type="text"
               value={endereco}
               onChange={(e) => setEndereco(e.target.value)}
               placeholder="Digite o endereço do parque"
             />
-
-            {/* TELEFONE */}
             <h3>Telefone</h3>
-
             <input
               type="text"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
               placeholder="Digite o telefone"
             />
-
-            {/* E-MAIL */}
             <h3>E-mail</h3>
-
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Digite o e-mail"
             />
-
-            {/* HORÁRIOS */}
             <h2>Horários de funcionamento</h2>
 
             <h3>Segunda a sexta-feira</h3>
@@ -249,7 +195,6 @@ function AdminInformacoes() {
               placeholder="Ex: Fechado"
             />
 
-            {/* BOTÃO SALVAR */}
             <button
               className="admin_button"
               type="button"
@@ -260,12 +205,9 @@ function AdminInformacoes() {
                 ? "Salvando..."
                 : "Salvar informações"}
             </button>
-
           </div>
-
         )}
 
-        {/* MENSAGENS */}
         {erro && (
           <p role="alert">
             {erro}
@@ -278,22 +220,13 @@ function AdminInformacoes() {
           </p>
         )}
 
-        {/* PRÉ-VISUALIZAÇÃO */}
         <div className="informacoes_preview">
 
           <h3>Pré-visualização</h3>
 
-          <p>
-            📍 {endereco || "Endereço não informado"}
-          </p>
-
-          <p>
-            📞 {telefone || "Telefone não informado"}
-          </p>
-
-          <p>
-            ✉️ {email || "E-mail não informado"}
-          </p>
+          <p>📍 {endereco || "Endereço não informado"}</p>
+          <p>📞 {telefone || "Telefone não informado"}</p>
+          <p>✉️ {email || "E-mail não informado"}</p>
 
           <h3>Horários de funcionamento</h3>
 
@@ -311,15 +244,10 @@ function AdminInformacoes() {
             Domingos e feriados:{" "}
             {horarios.domFeriado || "Não informado"}
           </p>
-
         </div>
-
       </div>
-
     </div>
-
   );
-
 }
 
 export default AdminInformacoes;

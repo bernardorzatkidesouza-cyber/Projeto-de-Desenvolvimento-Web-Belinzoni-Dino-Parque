@@ -1,9 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter,RouterProvider,} from "react-router-dom";
 
 import "./index.css";
 import "./assets/styles.css";
@@ -13,10 +10,7 @@ import Tela_principal from "./pages/tela_principal.jsx";
 import Galeria from "./pages/galeria.jsx";
 import ErrorPage from "./pages/pagina_de_erro.jsx";
 import Noticias from "./pages/noticias.jsx";
-
-// Esta é a página de login administrativa já criada dentro de src/pages.
 import Acesso_admin from "./pages/acesso_admin.jsx";
-
 import Admin_galeria from "./pages/admin_galeria.jsx";
 import Admin_noticia from "./pages/admin_noticia.jsx";
 import Admin_agenda from "./pages/admin_agenda.jsx";
@@ -42,13 +36,9 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      // /admin abre a tela de login que está em src/pages/acesso_admin.jsx
       { index: true, element: <Acesso_admin /> },
-
-      // Alias opcional: /admin/login abre a mesma tela de login.
       { path: "login", element: <Acesso_admin /> },
-
-      // Somente as páginas internas ficam protegidas pelo login.
+      
       {
         element: <ProtectedRoute />,
         children: [

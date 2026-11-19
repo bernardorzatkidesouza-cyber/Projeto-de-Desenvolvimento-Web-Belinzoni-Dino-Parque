@@ -113,11 +113,8 @@ function FormularioNoticia({ noticia, onSalvar, onFechar }) {
           >
             ✓ Salvar
           </button>
-
         </div>
-
       </form>
-
     </Modal>
   );
 }

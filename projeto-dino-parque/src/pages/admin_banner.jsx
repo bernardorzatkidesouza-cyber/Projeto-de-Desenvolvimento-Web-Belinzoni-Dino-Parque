@@ -4,7 +4,7 @@ import "../assets/mobile.css";
 import "../assets/styles.css";
 
 import { Link } from "react-router-dom";
-import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 
 import useTema from "../hooks/useTema";
 import { pegar, enviar, enviarImagem } from "../services/api";
@@ -122,13 +122,11 @@ function Admin_banner() {
         <p>ADMINISTRAÇÃO</p>
 
         <hr />
-
         <p><Link to="/admin/admin_noticia">Notícias</Link></p>
         <p><Link to="/admin/admin_agenda">Agenda</Link></p>
         <p><Link to="/admin/admin_duvidas">Dúvidas</Link></p>
         <p><Link to="/admin/admin_galeria">Galeria de Fotos</Link></p>
         <p><Link to="/admin/admin_informacoes">Informações</Link></p>
-
         <hr />
 
         <p><Link to="/">Sair para o Site</Link></p>
@@ -138,9 +136,7 @@ function Admin_banner() {
 
         <h1>Banner e Cores</h1>
 
-        <p>
-          Personalize o banner inicial e as cores de todo o Dino Parque.
-        </p>
+        <p>Personalize o banner inicial e as cores de todo o Dino Parque.</p>
 
         <div className="admin_banner_dados">
 
@@ -198,9 +194,7 @@ function Admin_banner() {
 
           <h2>Paleta de cores global</h2>
 
-          <p>
-            As alterações serão aplicadas em todas as páginas do site.
-          </p>
+          <p>As alterações serão aplicadas em todas as páginas do site.</p>
 
           {opcoesCores.map((opcao) => (
             <div className="seletor_cor" key={opcao.nome}>
@@ -223,14 +217,10 @@ function Admin_banner() {
             </div>
           ))}
 
-          <button onClick={restaurarCores}>
-            Restaurar cores padrão
-          </button>
-
+          <button onClick={restaurarCores}>Restaurar cores padrão</button>
         </div>
 
         <div className="admin_banner_preview">
-
           <h2>Pré-visualização do banner</h2>
 
           <div
@@ -247,9 +237,7 @@ function Admin_banner() {
             <h3>{banner.subtitulo}</h3>
             <p>{banner.texto}</p>
           </div>
-
         </div>
-
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import "../assets/styles.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Brasao_ararangua from "../assets/Brasao_ararangua.jpg";
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 import useAgenda from "../hooks/useAgenda";
 import ModalEvento from "../components/ModalEvento";
 
@@ -21,13 +21,11 @@ function AdminAgenda() {
   const [modalAberto, setModalAberto] = useState(false);
   const [eventoSelecionado, setEventoSelecionado] = useState(null);
 
-  // ABRIR CADASTRO
   function abrirNovoEvento() {
     setEventoSelecionado(null);
     setModalAberto(true);
   }
 
-  // ABRIR EDIÇÃO
   function abrirEditarEvento(evento) {
     setEventoSelecionado(evento);
     setModalAberto(true);
@@ -39,12 +37,10 @@ function AdminAgenda() {
     setEventoSelecionado(null);
   }
 
-  // SALVAR
   async function handleSalvar(dados, id) {
     return await salvarEvento(dados, id);
   }
 
-  // EXCLUIR
   async function handleRemover(id) {
     const confirmar = window.confirm(
       "Deseja realmente remover este evento?"
@@ -57,8 +53,6 @@ function AdminAgenda() {
 
   return (
     <div className="admin_agenda">
-
-      {/* MENU LATERAL */}
       <div className="admin_barra_lateral">
 
         <img
@@ -72,48 +66,17 @@ function AdminAgenda() {
         <p>ADMINISTRAÇÃO</p>
 
         <hr />
-
-        <p>
-          <Link to="/admin/admin_noticia">
-            Notícias
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_duvidas">
-            Dúvidas
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_galeria">
-            Galeria de Fotos
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_informacoes">
-            Informações
-          </Link>
-        </p>
-
-        <p>
-          <Link to="/admin/admin_banner">
-            Banner e Cores
-          </Link>
-        </p>
-
+        <p><Link to="/admin/admin_noticia">Notícias</Link></p>
+        <p><Link to="/admin/admin_duvidas">Dúvidas</Link></p>
+        <p><Link to="/admin/admin_galeria">Galeria de Fotos</Link></p>
+        <p><Link to="/admin/admin_informacoes">Informações</Link></p>
+        <p><Link to="/admin/admin_banner">Banner e Cores</Link></p>
         <hr />
 
-        <p>
-          <Link to="/">
-            Sair para o Site
-          </Link>
-        </p>
+        <p><Link to="/">Sair para o Site</Link></p>
 
       </div>
 
-      {/* CONTEÚDO PRINCIPAL */}
       <div className="admin_conteudo">
 
         <h1>Agenda de Eventos</h1>
@@ -138,7 +101,6 @@ function AdminAgenda() {
           </p>
         )}
 
-        {/* CARDS DOS EVENTOS */}
         <div className="admin_agenda_lista">
 
           {carregando ? (
@@ -199,8 +161,6 @@ function AdminAgenda() {
         </div>
 
       </div>
-
-      {/* COMPONENTE DO MODAL */}
       <ModalEvento
         aberto={modalAberto}
         onFechar={fecharModal}

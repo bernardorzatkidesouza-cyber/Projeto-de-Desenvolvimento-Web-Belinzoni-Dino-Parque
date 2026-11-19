@@ -4,7 +4,7 @@ import useGaleria from "../hooks/useGaleria";
 import { Link } from "react-router-dom";
 import "../assets/mobile.css";
 import "../assets/styles.css";
-import Brasao_ararangua from '../assets/Brasao_ararangua.jpg';
+import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 
 function AdminGaleria() {
   const [urlImagem, setUrlImagem] = useState("");
