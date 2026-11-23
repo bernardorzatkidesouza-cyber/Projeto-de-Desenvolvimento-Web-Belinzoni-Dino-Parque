@@ -17,48 +17,20 @@
     }
 
     .menu__body > img {
-        grid-area: brasao;
-
-        width: 56px;
-        height: 56px;
-        object-fit: contain;
+        width: 58px;
+        height: 58px;
     }
 
     .menu__title {
-        grid-area: titulo;
-
-        min-width: 0;
-        margin: 0;
-
-        font-size: 16px;
-        line-height: 1.2;
-
-        overflow-wrap: normal;
-        word-break: normal;
+        font-size: 18px;
     }
 
     .menu__title span {
-        font-size: 12px;
-        margin-top: 4px;
-    }
-
-    .menu__links {
-        grid-area: links;
-
-        width: 100%;
-        margin: 0;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 4px;
+        font-size: 13px;
     }
 
     .menu__links a {
-        padding: 8px 10px;
-        font-size: 13px;
-        white-space: nowrap;
+        font-size: 14px;
     }
 
     .noticia_tela_pricipal {
@@ -214,6 +186,47 @@
         width: 100%;
         height: 300px;
     }
+
+    .programacao_tela_principal {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 42px 0;
+    }
+
+    .evento_card {
+        width: 100%;
+        min-width: 0;
+        padding: 18px;
+    }
+
+    .data_evento {
+        font-size: 14px;
+        margin-bottom: 9px;
+    }
+
+    .evento_title {
+        font-size: 18px;
+        line-height: 1.35;
+    }
+
+    .lacal_evento,
+    .hora_evento {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .funcionamento {
+        width: 100%;
+        min-width: 0;
+        padding: 20px;
+    }
+
+    .funcionamento_content_seg_sex,
+    .funcionamento_content_sab,
+    .funcionamento_content_dom_feri {
+        font-size: 14px;
+        line-height: 1.5;
+    }    
 }
 
 
@@ -231,16 +244,15 @@
     }
 
     .menu__title {
-        font-size: 16px;
+        font-size: 17px;
     }
 
     .menu__title span {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .menu__links a {
-        padding: 8px 9px;
-        font-size: 16px;
+        font-size: 13px;
     }
 
     .noticia_title {
