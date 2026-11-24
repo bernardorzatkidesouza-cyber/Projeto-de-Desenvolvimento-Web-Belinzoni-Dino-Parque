@@ -78,8 +78,6 @@ hr {
   margin: 22px 0;
 }
 
-/* NAVEGAÇÃO DO SITE */
-
 .menu {
   position: sticky;
   top: 0;
@@ -140,8 +138,6 @@ hr {
   background: var(--verde-claro);
   color: var(--verde);
 }
-
-/* PÁGINA INICIAL */
 
 .site {
   width: 100%;
@@ -547,7 +543,6 @@ hr {
   border-color: rgba(255,255,255,.2);
 }
 
-/* PÁGINAS PÚBLICAS */
 
 .galeria,
 .pagina_noticias {
@@ -581,7 +576,6 @@ hr {
   font: 800 36px 'Playfair Display', Georgia, serif;
 }
 
-/* DÚVIDAS */
 
 .duvidas_tela_principal {
   width: min(100% - 40px, var(--largura));
@@ -614,7 +608,6 @@ hr {
   color: var(--texto-suave);
 }
 
-/* PAINEL ADMINISTRATIVO */
 
 .admin_noticia,
 .admin_galeria,
@@ -1031,7 +1024,6 @@ hr {
   border-radius: 9px;
 }
 
-/* LOGIN */
 
 .acesso_admin_pag {
   min-height: 100vh;
@@ -1101,8 +1093,6 @@ hr {
   background: var(--verde-escuro);
 }
 
-/* SELETORES DE CORES */
-
 .seletor_cor {
   display: flex;
   align-items: center;
@@ -1131,8 +1121,6 @@ hr {
   font-weight: 700;
   color: var(--texto-suave);
 }
-
-/* PRÉ-VISUALIZAÇÃO DO TEMA */
 
 .preview_tema {
   padding: 30px;
@@ -1163,16 +1151,10 @@ hr {
   color: var(--texto);
 }
 
-/* ACESSIBILIDADE E ELEMENTOS GERAIS */
-
 ::selection {
   color: var(--branco);
   background: var(--verde);
 }
-
-/* =====================================
-   BANNER EDITÁVEL DO DINO PARQUE
-===================================== */
 
 .admin_banner_dados {
   background: var(--branco);
@@ -1231,8 +1213,6 @@ hr {
 .preview_tema p {
   color: white;
 }
-
-/* Aplicação global das cores */
 
 body {
   color: var(--texto);
