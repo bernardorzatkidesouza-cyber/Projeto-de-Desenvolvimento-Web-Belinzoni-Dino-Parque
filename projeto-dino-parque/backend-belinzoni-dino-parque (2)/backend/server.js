@@ -181,7 +181,7 @@ app.use(express.json({ limit: "200kb" }));
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => cb(null, /^image\/(jpeg|png|webp|gif)$/.test(file.mimetype)),
 });
 
@@ -491,7 +491,7 @@ app.put("/api/configuracoes-site", exigirAdmin, rota(async (req, res) => {
 
 // ============ IMAGENS (arquivos guardados no banco) ============
 app.post("/api/upload", exigirAdmin, upload.single("imagem"), rota(async (req, res) => {
-  if (!req.file) return res.status(400).json({ erro: "Envie uma imagem (jpg, png, webp ou gif até 5MB)" });
+  if (!req.file) return res.status(400).json({ erro: "Envie uma imagem (jpg, png, webp ou gif até 10MB)" });
   const r = await pool.query("INSERT INTO imagens (tipo, dados) VALUES ($1,$2) RETURNING id", [req.file.mimetype, req.file.buffer]);
   res.status(201).json({ url: `/api/imagens/${r.rows[0].id}` });
 }));
@@ -506,7 +506,7 @@ app.get("/api/imagens/:id", rota(async (req, res) => {
 }));
 
 app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) return res.status(400).json({ erro: "Imagem inválida ou maior que 5MB" });
+  if (err instanceof multer.MulterError) return res.status(400).json({ erro: "Imagem inválida ou maior que 10MB" });
   console.error(err);
   res.status(500).json({ erro: "Erro interno do servidor" });
 });
