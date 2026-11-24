@@ -67,8 +67,8 @@ function Admin_banner() {
       return;
     }
 
-    if (imagem.size > 5 * 1024 * 1024) {
-      setMensagem("A imagem deve ter no máximo 5 MB.");
+    if (imagem.size > 10 * 1024 * 1024) {
+      setMensagem("A imagem deve ter no máximo 10 MB.");
       return;
     }
 

@@ -16,9 +16,9 @@ function AdminInformacoes() {
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
   const [horarios, setHorarios] = useState({
-    segSex: "",
-    sabado: "",
-    domFeriado: "",
+    Seg: "",
+    TerDom: "",
+    Feriado: "",
   });
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
@@ -40,9 +40,9 @@ function AdminInformacoes() {
         setEmail(dados.email || "");
 
         setHorarios({
-          segSex: dados.horarios?.segSex || "",
-          sabado: dados.horarios?.sabado || "",
-          domFeriado: dados.horarios?.domFeriado || "",
+          Seg: dados.horarios?.Seg || "",
+          TerDom: dados.horarios?.TerDom || "",
+          Feriado: dados.horarios?.Feriado || "",
         });
 
       } catch (error) {
@@ -231,18 +231,18 @@ function AdminInformacoes() {
           <h3>Horários de funcionamento</h3>
 
           <p>
-            Segunda a sexta-feira:{" "}
-            {horarios.segSex || "Não informado"}
+            Segunda :{" "}
+            {horarios.Seg || "Não informado"}
           </p>
 
           <p>
-            Sábado:{" "}
-            {horarios.sabado || "Não informado"}
+            Terça a Domingo:{" "}
+            {horarios.TerDom || "Não informado"}
           </p>
 
           <p>
-            Domingos e feriados:{" "}
-            {horarios.domFeriado || "Não informado"}
+            Feriados:{" "}
+            {horarios.Feriado || "Não informado"}
           </p>
         </div>
       </div>
