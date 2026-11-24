@@ -89,15 +89,15 @@ function Home() {
     return (
       <>
         <p className="funcionamento_content_seg_sex">
-          Seg-Sex <span>{horarios.segSex || "Não informado"}</span>
+          Segunda <span>{horarios.Seg || "Não informado"}</span>
         </p>
 
         <p className="funcionamento_content_sab">
-          Sábados <span>{horarios.sabado || "Não informado"}</span>
+          Terça a Domingo <span>{horarios.TerDom || "Não informado"}</span>
         </p>
 
         <p className="funcionamento_content_dom_feri">
-          Dom e Feriados <span>{horarios.domFeriado || "Não informado"}</span>
+          Feriados <span>{horarios.Feriado || "Não informado"}</span>
         </p>
       </>
     );

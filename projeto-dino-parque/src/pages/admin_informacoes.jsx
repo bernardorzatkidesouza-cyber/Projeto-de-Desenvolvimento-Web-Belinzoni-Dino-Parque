@@ -162,35 +162,35 @@ function AdminInformacoes() {
             />
             <h2>Horários de funcionamento</h2>
 
-            <h3>Segunda a sexta-feira</h3>
+            <h3>Segunda</h3>
 
             <input
               type="text"
-              value={horarios.segSex}
+              value={horarios.Seg}
               onChange={(e) =>
-                atualizarHorario("segSex", e.target.value)
+                atualizarHorario("Seg", e.target.value)
               }
               placeholder="Ex: 08:00 às 18:00"
             />
 
-            <h3>Sábado</h3>
+            <h3>Terça a Domingo</h3>
 
             <input
               type="text"
-              value={horarios.sabado}
+              value={horarios.TerDom}
               onChange={(e) =>
-                atualizarHorario("sabado", e.target.value)
+                atualizarHorario("TerDom", e.target.value)
               }
               placeholder="Ex: 08:00 às 12:00"
             />
 
-            <h3>Domingos e feriados</h3>
+            <h3>Feriados</h3>
 
             <input
               type="text"
-              value={horarios.domFeriado}
+              value={horarios.Feriado}
               onChange={(e) =>
-                atualizarHorario("domFeriado", e.target.value)
+                atualizarHorario("Feriado", e.target.value)
               }
               placeholder="Ex: Fechado"
             />
