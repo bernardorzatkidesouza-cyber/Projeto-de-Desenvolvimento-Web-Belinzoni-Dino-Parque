@@ -10,9 +10,15 @@ function useInformacoes() {
     telefone: "",
     email: "",
     horarios: {
+<<<<<<< HEAD
       Seg: "",
       TerDom: "",
       Feriado: "",
+=======
+      segSex: "",
+      sabado: "",
+      domFeriado: "",
+>>>>>>> 42adc20afbc115a94593bbe315119c7fc88508a6
     },
   });
 
@@ -40,9 +46,15 @@ function useInformacoes() {
           telefone: dados.telefone || "",
           email: dados.email || "",
           horarios: {
+<<<<<<< HEAD
             Seg: dados.horarios?.Seg || "",
             TerDom: dados.horarios?.TerDom || "",
             Feriado: dados.horarios?.Feriado || "",
+=======
+            segSex: dados.horarios?.segSex || "",
+            sabado: dados.horarios?.sabado || "",
+            domFeriado: dados.horarios?.domFeriado || "",
+>>>>>>> 42adc20afbc115a94593bbe315119c7fc88508a6
           },
         });
 

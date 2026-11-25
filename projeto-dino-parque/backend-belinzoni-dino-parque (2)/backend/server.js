@@ -353,7 +353,11 @@ app.get("/api/informacoes", rota(async (req, res) => {
   const r = await pool.query("SELECT dados FROM informacoes_parque WHERE id = 1");
   res.json(r.rows[0]?.dados || {
     endereco: "", telefone: "", email: "",
+<<<<<<< HEAD
     horarios: { Seg: "", TerDom: "", Feriado: "" },
+=======
+    horarios: { segSex: "", sabado: "", domFeriado: "" },
+>>>>>>> 42adc20afbc115a94593bbe315119c7fc88508a6
   });
 }));
 
@@ -364,9 +368,15 @@ app.put("/api/informacoes", exigirAdmin, rota(async (req, res) => {
     telefone: String(dados.telefone || "").trim(),
     email: String(dados.email || "").trim(),
     horarios: {
+<<<<<<< HEAD
       Seg: String(dados.horarios?.Seg || "").trim(),
       TerDom: String(dados.horarios?.TerDom || "").trim(),
       Feriado: String(dados.horarios?.Feriado || "").trim(),
+=======
+      segSex: String(dados.horarios?.segSex || "").trim(),
+      sabado: String(dados.horarios?.sabado || "").trim(),
+      domFeriado: String(dados.horarios?.domFeriado || "").trim(),
+>>>>>>> 42adc20afbc115a94593bbe315119c7fc88508a6
     },
   };
   const r = await pool.query(

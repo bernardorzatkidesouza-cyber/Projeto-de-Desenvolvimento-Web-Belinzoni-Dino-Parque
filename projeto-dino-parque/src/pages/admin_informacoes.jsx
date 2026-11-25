@@ -231,7 +231,11 @@ function AdminInformacoes() {
           <h3>Horários de funcionamento</h3>
 
           <p>
+<<<<<<< HEAD
             Segunda:{" "}
+=======
+            Segunda :{" "}
+>>>>>>> 42adc20afbc115a94593bbe315119c7fc88508a6
             {horarios.Seg || "Não informado"}
           </p>
 
