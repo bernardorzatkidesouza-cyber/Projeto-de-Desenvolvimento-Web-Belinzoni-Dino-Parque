@@ -11,7 +11,7 @@ import useLogin from "../hooks/useLogin";
 function AcessoAdmin() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
+  const [mostrarSenha, setMostrarSenha] = useState(false);
   const navigate = useNavigate();
 
   const { login, carregando, erro } = useLogin();
@@ -59,14 +59,23 @@ function AcessoAdmin() {
           <div className="campo_login">
             <label htmlFor="senha">Senha</label>
 
-            <input
-              id="senha"
-              type="password"
-              placeholder="Digite sua senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
+            <div className="campo_senha">
+              <input
+                id="senha"
+                type={mostrarSenha ? "text" : "password"}
+                placeholder="Digite sua senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setMostrarSenha(!mostrarSenha)}
+              >
+                {mostrarSenha ? "Ocultar" : "Visualizar"}
+              </button>
+            </div>
           </div>
 
           {erro && (

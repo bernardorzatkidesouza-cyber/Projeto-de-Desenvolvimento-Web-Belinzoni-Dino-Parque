@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import useGaleria from "../hooks/useGaleria";
 import { Link } from "react-router-dom";
 import "../assets/mobile.css";
@@ -7,6 +8,9 @@ import Brasao_ararangua from "../assets/Brasao_ararangua.png";
 
 function Galeria() {
   const { fotos, carregando, erro } = useGaleria();
+
+  // Controla a imagem que será exibida ampliada
+  const [imagemSelecionada, setImagemSelecionada] = useState(null);
 
   return (
     <div className="tela-principal">
@@ -64,6 +68,10 @@ function Galeria() {
                     foto.legenda ||
                     "Foto do Dino Parque Belinzoni"
                   }
+                  onClick={() =>
+                    setImagemSelecionada(foto.imagem)
+                  }
+                  style={{ cursor: "pointer" }}
                 />
 
                 {foto.legenda && (
@@ -76,6 +84,29 @@ function Galeria() {
           </div>
         )}
       </div>
+
+      {/* Modal para ampliar a imagem */}
+      {imagemSelecionada && (
+        <div
+          className="modal_imagem"
+          onClick={() => setImagemSelecionada(null)}
+        >
+          <button
+            type="button"
+            className="fechar_modal_imagem"
+            onClick={() => setImagemSelecionada(null)}
+            aria-label="Fechar imagem ampliada"
+          >
+            &times;
+          </button>
+
+          <img
+            src={imagemSelecionada}
+            alt="Imagem ampliada da galeria"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }

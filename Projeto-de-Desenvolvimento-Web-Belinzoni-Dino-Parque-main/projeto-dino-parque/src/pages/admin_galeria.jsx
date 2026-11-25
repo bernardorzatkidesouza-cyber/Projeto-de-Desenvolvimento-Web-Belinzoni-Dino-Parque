@@ -101,7 +101,7 @@ function AdminGaleria() {
         <p><Link to="/admin/admin_banner">Banner e Cores</Link></p>
 
         <hr />
-        <p><Link to="/">Sair para o Site</Link></p>
+        <p><Link to="/admin">Sair para o Site</Link></p>
       </aside>
 
       <main className="admin_conteudo">

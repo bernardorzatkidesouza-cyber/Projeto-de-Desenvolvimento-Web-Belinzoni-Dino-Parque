@@ -85,7 +85,7 @@ function AdminNoticia() {
         <p><Link to="/admin/admin_banner">Banner e Cores</Link></p>
 
         <hr />
-        <p><a href="/">Sair para o Site</a></p>
+        <p><Link to="/admin">Sair para o Site</Link></p>
       </div>
 
       <div className="admin_conteudo">

@@ -129,7 +129,7 @@ function Admin_banner() {
         <p><Link to="/admin/admin_informacoes">Informações</Link></p>
         <hr />
 
-        <p><Link to="/">Sair para o Site</Link></p>
+        <p><Link to="/admin">Sair para o Site</Link></p>
       </div>
 
       <div className="admin_conteudo">

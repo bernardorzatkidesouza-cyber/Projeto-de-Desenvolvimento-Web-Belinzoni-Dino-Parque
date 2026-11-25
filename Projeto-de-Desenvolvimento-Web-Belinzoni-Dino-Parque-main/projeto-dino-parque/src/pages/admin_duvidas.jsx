@@ -143,7 +143,7 @@ function AdminDuvidas() {
 
         <hr />
 
-        <p><Link to="/">Sair para o Site</Link></p>
+        <p><Link to="/admin">Sair para o Site</Link></p>
       </div>
 
       <div className="admin_conteudo">
